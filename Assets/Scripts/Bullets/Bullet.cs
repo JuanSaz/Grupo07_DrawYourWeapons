@@ -1,9 +1,14 @@
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class Bullet : MonoBehaviour, IUpdatable
 {
     [SerializeField] private float speed;
     [SerializeField] private float lifeSpan;
+    private GameObject immunePlayer;
+    public GameObject ImmunePlayer { get => immunePlayer; set { immunePlayer = value;} }
+
+    public ObjectPool<Bullet> pool;
     private float timer = 0;
 
     private void Awake()
@@ -21,10 +26,26 @@ public class Bullet : MonoBehaviour, IUpdatable
             {
                 timer = 0;
                 UpdateManager.Instance.Unsubscribe(this);
-                Destroy(gameObject);//NO DESTRUIR USAR POOL
+                Reset();
+                pool.Release(this);
             }
         }
-        
+    }
 
+    public void Reset()
+    {
+        timer = 0;
+        immunePlayer = null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.CompareTag("Player"))
+        {
+            if (collision.gameObject != immunePlayer)
+            {
+                Destroy(collision.gameObject);
+            }
+        }
     }
 }

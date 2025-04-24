@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour, IUpdatable
@@ -6,18 +7,20 @@ public class Player : MonoBehaviour, IUpdatable
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float speedMultiplier =  1;
-    [SerializeField] private GameObject bulletPrefab;
+    [SerializeField] private SO_PlayerInput inputs;
     private MyCircleCollider myColl;
+    private ObjectPool<Bullet> bulletPool;
 
     private void Awake()
     {
         myColl = GetComponent<MyCircleCollider>();
         UpdateManager.Instance.Subscribe(this);
+        bulletPool = FindAnyObjectByType<BulletPool>().pool;
     }
     public void UpdateMe(float deltaTime)
     {
         Movement();
-        if(Input.GetButtonDown("Shoot"))
+        if(Input.GetButtonDown(inputs.shoot))
         {
             Shoot();
         }
@@ -25,14 +28,16 @@ public class Player : MonoBehaviour, IUpdatable
 
     private void Shoot()
     {
-        var bullet = Instantiate(bulletPrefab);
+        var bullet = bulletPool.Get();
         bullet.transform.SetPositionAndRotation(transform.position, transform.rotation);
+        bullet.ImmunePlayer = gameObject;
+        UpdateManager.Instance.Subscribe(bullet);
     }
 
     private void Movement()
     {
-        float moveInput = Input.GetAxis("Vertical");
-        float rotateInput = -Input.GetAxis("Horizontal");
+        float moveInput = Input.GetAxis(inputs.vertical);
+        float rotateInput = -Input.GetAxis(inputs.horizontal);
 
 
         transform.Rotate(0f, 0f, rotateInput * rotationSpeed * Time.deltaTime);
