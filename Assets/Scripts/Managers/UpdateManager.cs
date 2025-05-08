@@ -42,6 +42,7 @@ public class UpdateManager : MonoBehaviour
     public void Unsubscribe(IUpdatable obj)
     {
         int index = scriptsToUpdate.IndexOf(obj);
+
         if (index >= 0)
         {
             scriptsToUpdate[index] = null;

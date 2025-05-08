@@ -11,10 +11,6 @@ public class Bullet : MonoBehaviour, IUpdatable
     public ObjectPool<Bullet> pool;
     private float timer = 0;
 
-    private void Awake()
-    {
-        UpdateManager.Instance.Subscribe(this);
-    }
 
     public void UpdateMe(float deltaTime)
     {
@@ -30,12 +26,14 @@ public class Bullet : MonoBehaviour, IUpdatable
                 pool.Release(this);
             }
         }
+               
     }
 
     public void Reset()
     {
         timer = 0;
         immunePlayer = null;
+        transform.position = new Vector3(0, 0, 0);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
