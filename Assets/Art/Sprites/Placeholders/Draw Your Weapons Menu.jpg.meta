@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Draw Your Weapons Menu_0: -3817647878809245182
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
