@@ -42,7 +42,16 @@ public class Bullet : MonoBehaviour, IUpdatable
         {
             if (collision.gameObject != immunePlayer)
             {
-                Destroy(collision.gameObject);
+                UpdateManager.Instance.Unsubscribe(this);
+                Reset();
+                pool.Release(this);
+                var target = collision.gameObject.GetComponent<Player>();
+
+                //if (target != null)
+                //{
+                    target.GetKilled();
+                    //target = null;
+                //}
             }
         }
     }

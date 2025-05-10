@@ -20,6 +20,7 @@ public class Player : MonoBehaviour, IUpdatable
     public void UpdateMe(float deltaTime)
     {
         Movement();
+
         if(Input.GetButtonDown(inputs.shoot))
         {
             Shoot();
@@ -42,6 +43,12 @@ public class Player : MonoBehaviour, IUpdatable
 
         transform.Rotate(0f, 0f, rotateInput * rotationSpeed * Time.deltaTime);
         transform.position += transform.up * (moveInput * movementSpeed * Time.deltaTime);
+    }
+
+    public void GetKilled()
+    {
+        UpdateManager.Instance.Unsubscribe(this);
+        gameObject.SetActive(false);
     }
 
     private void OnTriggerStay2D(Collider2D collision)

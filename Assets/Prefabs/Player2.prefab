@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1194459299903123890}
   m_Layer: 0
   m_Name: Player2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,6 @@ MonoBehaviour:
   rotationSpeed: 180
   speedMultiplier: 1
   inputs: {fileID: 11400000, guid: 416dfc15ab30c6f46bbd922eae6c5aed, type: 2}
-  bulletPrefab: {fileID: 2251495490697621128, guid: 45569b4f870d335468cc4b27bb49b689, type: 3}
 --- !u!114 &3226207031783920779
 MonoBehaviour:
   m_ObjectHideFlags: 0
