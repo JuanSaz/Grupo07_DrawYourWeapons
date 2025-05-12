@@ -3,13 +3,16 @@ using UnityEngine;
 
 public class MyBoxCollider : MonoBehaviour
 {
-    private float width;
-    private float height;
+    [SerializeField] private float width;
+    [SerializeField] private float height;
 
     public Vector2 position => transform.position;
     public float Width { get => width; }
     public float Height { get => height; }
-
+    public float boxRight;
+    public float boxLeft;
+    public float boxBottom;
+    public float boxTop;
     [HideInInspector] public float halfWidth;
     [HideInInspector] public float halfHeight;
     private void Awake()
@@ -19,6 +22,10 @@ public class MyBoxCollider : MonoBehaviour
 
         halfWidth = width * 0.5f;
         halfHeight = height * 0.5f;
+        boxLeft = position.x - halfWidth;
+        boxRight = position.x + halfWidth;
+        boxBottom = position.y - halfHeight;
+        boxTop = position.y + halfHeight;
     }
 
     private void OnDrawGizmos()

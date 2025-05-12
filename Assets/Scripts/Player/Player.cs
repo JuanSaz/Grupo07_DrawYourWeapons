@@ -30,7 +30,8 @@ public class Player : MonoBehaviour, IUpdatable
     {
         var bullet = bulletPool.Get();
         bullet.transform.SetPositionAndRotation(transform.position, transform.rotation);
-        bullet.ImmunePlayer = gameObject;
+        bullet.dir = transform.up.normalized;
+        bullet.ImmunePlayer = this;
         UpdateManager.Instance.Subscribe(bullet);
     }
 
@@ -59,7 +60,7 @@ public class Player : MonoBehaviour, IUpdatable
 
         if (collision.TryGetComponent<MyBoxCollider>(out MyBoxCollider otherBox))
         {
-            myColl.SolveWithBox(otherBox);
+            myColl.SolveWithStaticBox(otherBox);
         }
     }
 }
