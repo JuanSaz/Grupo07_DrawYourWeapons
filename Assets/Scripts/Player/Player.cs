@@ -72,11 +72,21 @@ public class Player : MonoBehaviour, IUpdatable
 
     public void ResetPlayer()
     {
-        isAlive = true;
-        gameObject.SetActive(true);
-        transform.position = startPos;
-        transform.rotation = startRot;
-        UpdateManager.Instance.Subscribe(this);
+        if (isAlive == false)
+        {
+            isAlive = true;
+            gameObject.SetActive(true);
+            transform.position = startPos;
+            transform.rotation = startRot;
+            UpdateManager.Instance.Subscribe(this);
+        }
+
+        else
+        {
+            transform.position = startPos;
+            transform.rotation = startRot;
+        }
+        //UpdateManager.Instance.Subscribe(this);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
