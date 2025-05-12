@@ -11,7 +11,7 @@ public class WinInfo : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        GameManager.Instance.DestroyParty();
+        LevelManager.Instance.DestroyParty();
         
         SceneChanger.Instance.LoadScene("MenuScene");
     }

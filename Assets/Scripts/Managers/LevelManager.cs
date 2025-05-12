@@ -21,12 +21,12 @@ public class LevelManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         SpawnPlayers();
     }
 
-    void SpawnPlayers()
+   public void SpawnPlayers()
     {
         switch (GameManager.Instance.GetPlayerAmount())
         {
@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
 
         foreach(var player in activePlayers)
         {
-            UpdateManager.Instance.Unsubscribe(player);
+            player.GetKilled();
         }
         //WinCanvas = GameObject.Find("WinCanvas");
         WinInfo info = WinCanvas.GetComponent<WinInfo>();
@@ -79,6 +79,14 @@ public class LevelManager : MonoBehaviour
         ActivePlayers = FindObjectsOfType<Player>().ToList();
     }
 
-    
+    public void DestroyParty()
+    {
+        foreach (var player in LevelManager.Instance.ActivePlayers)
+        {
+            player.GetKilled();
+        }
+
+        activePlayers.Clear();
+    }
 }
 

@@ -4,7 +4,7 @@ public class PlayerAmountSelection : MonoBehaviour, IUpdatable
 {
     private void Awake()
     {
-        UpdateManager.Instance.Subscribe(this);
+        //UpdateManager.Instance.Subscribe(this);
     }
 
     public void UpdateMe(float deltaTime)
@@ -15,6 +15,7 @@ public class PlayerAmountSelection : MonoBehaviour, IUpdatable
 
             UpdateManager.Instance.Unsubscribe(this);
             SceneChanger.Instance.LoadScene("SampleScene");
+            
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))  //Si presionó el 3 en numpad o normal
@@ -23,6 +24,7 @@ public class PlayerAmountSelection : MonoBehaviour, IUpdatable
 
             UpdateManager.Instance.Unsubscribe(this);
             SceneChanger.Instance.LoadScene("SampleScene");
+           
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))   //Si presionó el 4 en numpad o normal
@@ -31,7 +33,14 @@ public class PlayerAmountSelection : MonoBehaviour, IUpdatable
 
             UpdateManager.Instance.Unsubscribe(this);
             SceneChanger.Instance.LoadScene("SampleScene");
+           
         }
 
+    }
+
+    public void Subscribe()
+    {
+        //UpdateManager.Instance.Unsubscribe(this);
+        UpdateManager.Instance.Subscribe(this);
     }
 }
