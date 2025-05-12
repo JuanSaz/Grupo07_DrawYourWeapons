@@ -86,7 +86,7 @@ public class Player : MonoBehaviour, IUpdatable
             transform.position = startPos;
             transform.rotation = startRot;
         }
-        //UpdateManager.Instance.Subscribe(this);
+       
     }
 
     private void OnTriggerStay2D(Collider2D collision)
