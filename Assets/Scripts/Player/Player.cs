@@ -10,7 +10,6 @@ public class Player : MonoBehaviour, IUpdatable
     [SerializeField] private SO_PlayerInput inputs;
     private MyCircleCollider myColl;
     private ObjectPool<Bullet> bulletPool;
-
     private void Awake()
     {
         myColl = GetComponent<MyCircleCollider>();
@@ -56,8 +55,11 @@ public class Player : MonoBehaviour, IUpdatable
         if (collision.TryGetComponent<MyCircleCollider>(out MyCircleCollider other))
         {
             myColl.SolveCircleCollidingStaticCircle(other);
-            
         }
 
+        if (collision.TryGetComponent<MyBoxCollider>(out MyBoxCollider otherBox))
+        {
+            myColl.SolveWithBox(otherBox);
+        }
     }
 }
