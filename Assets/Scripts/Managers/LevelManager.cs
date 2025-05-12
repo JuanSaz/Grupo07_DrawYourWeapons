@@ -1,10 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
     public List<Transform> spawnPoints = new List<Transform>();
+
+    [SerializeField] private GameObject WinCanvas;
+
+    private List<Player> activePlayers;
+
+    public List<Player> ActivePlayers { get { return activePlayers; } set { activePlayers = value; } }
 
     void Awake()
     {
@@ -28,6 +35,8 @@ public class LevelManager : MonoBehaviour
                 {
                     Vector3 playerSpawnPos = new Vector3(spawnPoints[i].position.x, spawnPoints[i].position.y, 0);
                     Instantiate(GameManager.Instance.playerPrefabs[i], playerSpawnPos, spawnPoints[i].rotation);
+
+                    GetPlayers();
                 }
                 break;
             case 3:
@@ -35,6 +44,7 @@ public class LevelManager : MonoBehaviour
                 {
                     Vector3 playerSpawnPos = new Vector3(spawnPoints[i].position.x, spawnPoints[i].position.y, 0);
                     Instantiate(GameManager.Instance.playerPrefabs[i], playerSpawnPos, spawnPoints[i].rotation);
+                    GetPlayers();
                 }
                 break;
             case 4:
@@ -42,9 +52,33 @@ public class LevelManager : MonoBehaviour
                 {
                     Vector3 playerSpawnPos = new Vector3(spawnPoints[i].position.x, spawnPoints[i].position.y, 0);
                     Instantiate(GameManager.Instance.playerPrefabs[i], playerSpawnPos, spawnPoints[i].rotation);
+                    GetPlayers();
                 }
                 break;
         }
     }
+
+    public void SetWinner(Player Winner)
+    {
+        Debug.Log("El ganador es " + Winner.PlayerName.ToUpper() + "!");
+
+        foreach(var player in activePlayers)
+        {
+            UpdateManager.Instance.Unsubscribe(player);
+        }
+        //WinCanvas = GameObject.Find("WinCanvas");
+        WinInfo info = WinCanvas.GetComponent<WinInfo>();
+
+        info.SetWinnerNameAndScore(Winner.PlayerName, Winner.Score);
+        WinCanvas.SetActive(true);
+
+    }
+
+    private void GetPlayers()
+    {
+        ActivePlayers = FindObjectsOfType<Player>().ToList();
+    }
+
+    
 }
 

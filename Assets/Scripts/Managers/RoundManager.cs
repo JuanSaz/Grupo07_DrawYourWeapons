@@ -10,7 +10,8 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
-        players = FindObjectsOfType<Player>().ToList(); 
+        //players = FindObjectsOfType<Player>().ToList(); 
+        players = LevelManager.Instance.ActivePlayers;
     }
 
     private void Update()
@@ -33,6 +34,7 @@ public class RoundManager : MonoBehaviour
         {
             roundEnded = true;
             lastAlive.AddPoint();
+            GetPointsFromSurvivour(lastAlive);
 
             StartCoroutine(RestartRoundAfterDelay(2f)); 
         }
@@ -49,4 +51,14 @@ public class RoundManager : MonoBehaviour
 
         roundEnded = false;
     }
+
+    public void GetPointsFromSurvivour(Player survivour)
+    {
+        if(survivour.Score == 3)
+        {
+           LevelManager.Instance.SetWinner(survivour);
+            
+        }
+    }
+    
 }

@@ -28,4 +28,12 @@ public class GameManager : MonoBehaviour
     {
         return playerAmount;
     }
+
+    public void DestroyParty()
+    {
+        foreach(var player in LevelManager.Instance.ActivePlayers)
+        {
+            Destroy(player);
+        }
+    }
 }

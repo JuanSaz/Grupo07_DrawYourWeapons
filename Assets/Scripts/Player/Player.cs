@@ -1,8 +1,12 @@
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Pool;
 
 public class Player : MonoBehaviour, IUpdatable
 {
+
+
+    [SerializeField] private string playerName;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float speedMultiplier = 1;
@@ -15,6 +19,10 @@ public class Player : MonoBehaviour, IUpdatable
     private Quaternion startRot;
     private int score = 0;
     private bool isAlive = true;
+
+    public int Score {  get { return score; } set { score = value; } }
+    
+    public string PlayerName { get { return playerName; } set { playerName = value; } }
 
     private void Awake()
     {
@@ -67,7 +75,7 @@ public class Player : MonoBehaviour, IUpdatable
     public void AddPoint()
     {
         score++;
-        Debug.Log($"Player {gameObject.name} tiene {score} puntos.");
+        //Debug.Log($"Player {gameObject.name} tiene {score} puntos.");
     }
 
     public void ResetPlayer()
@@ -88,6 +96,8 @@ public class Player : MonoBehaviour, IUpdatable
         }
        
     }
+
+    
 
     private void OnTriggerStay2D(Collider2D collision)
     {
