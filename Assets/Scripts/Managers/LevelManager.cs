@@ -62,11 +62,8 @@ public class LevelManager : MonoBehaviour
     {
         Debug.Log("El ganador es " + Winner.PlayerName.ToUpper() + "!");
 
-        foreach(var player in activePlayers)
-        {
-            player.GetKilled();
-        }
-        //WinCanvas = GameObject.Find("WinCanvas");
+        DestroyParty();
+        
         WinInfo info = WinCanvas.GetComponent<WinInfo>();
 
         info.SetWinnerNameAndScore(Winner.PlayerName, Winner.Score);
@@ -81,11 +78,10 @@ public class LevelManager : MonoBehaviour
 
     public void DestroyParty()
     {
-        foreach (var player in LevelManager.Instance.ActivePlayers)
+        foreach (var player in activePlayers)
         {
-            player.GetKilled();
+            UpdateManager.Instance.Unsubscribe(player);
         }
-
         activePlayers.Clear();
     }
 }

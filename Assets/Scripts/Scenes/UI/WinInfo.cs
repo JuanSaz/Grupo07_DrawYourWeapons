@@ -11,9 +11,7 @@ public class WinInfo : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        LevelManager.Instance.DestroyParty();
-        
-        SceneChanger.Instance.LoadScene("MenuScene");
+      SceneChanger.Instance.LoadScene("MenuScene");
     }
 
     public void SetWinnerNameAndScore(string name, int score)
