@@ -26,6 +26,8 @@ public class Player : MonoBehaviour, IUpdatable
     
     public string PlayerName { get { return playerName; } set { playerName = value; } }
 
+
+
     private void Awake()
     {
         myColl = GetComponent<MyCircleCollider>();
@@ -54,7 +56,8 @@ public class Player : MonoBehaviour, IUpdatable
     {
         var bullet = bulletPool.Get();
         bullet.transform.SetPositionAndRotation(transform.position, transform.rotation);
-        bullet.ImmunePlayer = gameObject;
+        bullet.dir = transform.up.normalized;
+        bullet.ImmunePlayer = this;
         UpdateManager.Instance.Subscribe(bullet);
     }
 
@@ -108,6 +111,10 @@ public class Player : MonoBehaviour, IUpdatable
         if (collision.TryGetComponent<MyCircleCollider>(out MyCircleCollider other))
         {
             myColl.SolveCircleCollidingStaticCircle(other);
+        }
+        if (collision.TryGetComponent<MyBoxCollider>(out MyBoxCollider otherBox))
+        {
+            myColl.SolveWithStaticBox(otherBox);
         }
     }
 }

@@ -5,18 +5,23 @@ public class Bullet : MonoBehaviour, IUpdatable
 {
     [SerializeField] private float speed;
     [SerializeField] private float lifeSpan;
-    private GameObject immunePlayer;
-    public GameObject ImmunePlayer { get => immunePlayer; set { immunePlayer = value;} }
+    private Player immunePlayer;
+    private MyCircleCollider myColl;
+    public Vector2 dir;
+    public Player ImmunePlayer { get => immunePlayer; set { immunePlayer = value;} }
 
     public ObjectPool<Bullet> pool;
     private float timer = 0;
 
-
+    private void Awake()
+    {
+        myColl = GetComponent<MyCircleCollider>();
+    }
     public void UpdateMe(float deltaTime)
     {
         if (timer < lifeSpan)
         {
-            transform.position += transform.up * speed * Time.deltaTime;
+            transform.position += (Vector3)dir * speed * Time.deltaTime;
             timer += Time.deltaTime;
             if(timer > lifeSpan)
             {
@@ -34,25 +39,27 @@ public class Bullet : MonoBehaviour, IUpdatable
         timer = 0;
         immunePlayer = null;
         transform.position = new Vector3(0, 0, 0);
+        dir = Vector2.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.TryGetComponent(out Player playerHit))
         {
-            if (collision.gameObject != immunePlayer)
-            {
-                UpdateManager.Instance.Unsubscribe(this);
-                Reset();
-                pool.Release(this);
-                var target = collision.gameObject.GetComponent<Player>();
+            if (playerHit == immunePlayer) return;
 
-                //if (target != null)
-                //{
-                    target.GetKilled();
-                    //target = null;
-                //}
-            }
+            UpdateManager.Instance.Unsubscribe(this);
+            Reset();
+            pool.Release(this);
+            playerHit.GetKilled();
+        }
+
+        if (collision.TryGetComponent<MyBoxCollider>(out MyBoxCollider otherBox))
+        {
+            dir = myColl.ProjectCircleOntoLine(otherBox, dir);
+            immunePlayer = null;
         }
     }
+
+    
 }
