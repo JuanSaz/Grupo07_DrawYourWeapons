@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -37,6 +38,14 @@ public class UpdateManager : MonoBehaviour
     public void Subscribe(IUpdatable obj)
     {
         scriptsToUpdate.Add(obj);
+    }
+
+    public void UnsubscribeAll()
+    {
+        for (int i = 0; i < scriptsToUpdate.Count; i++)
+        {
+            scriptsToUpdate[i] = null;
+        }
     }
 
     public void Unsubscribe(IUpdatable obj)

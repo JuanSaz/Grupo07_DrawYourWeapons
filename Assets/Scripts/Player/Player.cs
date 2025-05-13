@@ -14,11 +14,11 @@ public class Player : MonoBehaviour, IUpdatable
 
     private MyCircleCollider myColl;
     private ObjectPool<Bullet> bulletPool;
-
     private Vector3 startPos;
     private Quaternion startRot;
     private int score = 0;
     private bool isAlive = true;
+    public bool IsAlive() => isAlive;
 
     public int Score {  get { return score; } set { score = value; } }
     
@@ -32,6 +32,9 @@ public class Player : MonoBehaviour, IUpdatable
 
         startPos = transform.position;
         startRot = transform.rotation;
+
+        LevelManager.Instance.ActivePlayers.Add(this);
+        LevelManager.Instance.TotalPlayers.Add(this);
     }
 
     public void UpdateMe(float deltaTime)
@@ -54,7 +57,6 @@ public class Player : MonoBehaviour, IUpdatable
         bullet.ImmunePlayer = this;
         UpdateManager.Instance.Subscribe(bullet);
     }
-
     private void Movement()
     {
         float moveInput = Input.GetAxis(inputs.vertical);
@@ -69,9 +71,10 @@ public class Player : MonoBehaviour, IUpdatable
         isAlive = false;
         gameObject.SetActive(false);
         UpdateManager.Instance.Unsubscribe(this);
+        LevelManager.Instance.onPlayerKilled?.Invoke(this);
     }
 
-    public bool IsAlive() => isAlive;
+
 
     public void AddPoint()
     {
@@ -88,14 +91,14 @@ public class Player : MonoBehaviour, IUpdatable
             transform.position = startPos;
             transform.rotation = startRot;
             UpdateManager.Instance.Subscribe(this);
+            LevelManager.Instance.ActivePlayers.Add(this);
         }
 
         else
         {
-            transform.position = startPos;
-            transform.rotation = startRot;
+            transform.SetPositionAndRotation(startPos, startRot);
         }
-       
+
     }
 
     

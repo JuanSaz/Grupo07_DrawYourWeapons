@@ -17,7 +17,7 @@ public class MyBoxCollider : MonoBehaviour
     public float halfHeight { get; private set; }
     private void Awake()
     {
-        ChangeBoxDimensions(width, height);
+        ChangeBoxDimensions(transform.localScale.x, transform.localScale.y);
 
         halfWidth = width * 0.5f;
         halfHeight = height * 0.5f;
