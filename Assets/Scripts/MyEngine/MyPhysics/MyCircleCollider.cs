@@ -7,6 +7,8 @@ public class MyCircleCollider : MonoBehaviour
 {
     [SerializeField] private float radius;
     public float Radius => radius;
+    Vector2 wallCollisionNormal;
+
 
     private void Awake()
     {
@@ -15,7 +17,6 @@ public class MyCircleCollider : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        // Dibujar el círculo en el editor
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, radius);
     }
@@ -35,22 +36,21 @@ public class MyCircleCollider : MonoBehaviour
     }
     public void SolveWithStaticBox(MyBoxCollider box)
     {
-        Vector2 normal;
-        Vector3 newPosition = HandleBoxCollision(box, out normal);
+        Vector3 newPosition = HandleBoxCollision(box); 
         transform.position = newPosition;
     }
 
     public Vector2 ProjectCircleOntoLine(MyBoxCollider otherBox, Vector2 bulletDir)
     {
-        Vector2 normal;
-        Vector3 newPosition = HandleBoxCollision(otherBox, out normal);
+        
+        Vector3 newPosition = HandleBoxCollision(otherBox);
         transform.position = newPosition;
 
-        float dot = Vector2.Dot(bulletDir, normal);
-        return bulletDir - 2 * dot * normal;
+        float dot = Vector2.Dot(bulletDir, wallCollisionNormal);
+        return bulletDir - 2 * dot * wallCollisionNormal; //Mantengo el mismo sentido de la dirección paralela e invierto la perpendicular a la normal
     }
 
-    private Vector2 HandleBoxCollision(MyBoxCollider box, out Vector2 normal)
+    private Vector2 HandleBoxCollision(MyBoxCollider box)
     {
         Vector3 position = transform.position;
         Vector2 boxPos = box.position;
@@ -61,33 +61,34 @@ public class MyCircleCollider : MonoBehaviour
         float bottomPenetration = transform.position.y - (box.boxBottom - radius);
         float topPenetration = (box.boxTop + radius) - transform.position.y;
 
-        float minPenetration = Mathf.Min(leftPenetration, rightPenetration, bottomPenetration, topPenetration);
+        //Elige donde hay más penetración de las cuatro paredes para determinar donde chocó                                                                                                  
+        float minPenetration = Mathf.Min(leftPenetration, rightPenetration, bottomPenetration, topPenetration); 
 
 
-        normal = Vector2.zero;
+        wallCollisionNormal = Vector2.zero; //Normal del lado que golpeó
 
         if (minPenetration == leftPenetration)
         {
-            normal = Vector2.left;
+            wallCollisionNormal = Vector2.left;
             position.x = box.boxLeft - radius;
         }
         else if (minPenetration == rightPenetration)
         {
-            normal = Vector2.right;
+            wallCollisionNormal = Vector2.right;
             position.x = box.boxRight + radius;
         }
         else if (minPenetration == bottomPenetration)
         {
-            normal = Vector2.down;
+            wallCollisionNormal = Vector2.down;
             position.y = box.boxBottom - radius;
         }
         else 
         {
-            normal = Vector2.up;
+            wallCollisionNormal = Vector2.up;
             position.y = box.boxTop + radius;
         }
 
-        return position;
+        return position; //Devuelve la posición "acomodada"
     }
 
 

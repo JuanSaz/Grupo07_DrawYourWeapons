@@ -13,12 +13,11 @@ public class MyBoxCollider : MonoBehaviour
     public float boxLeft;
     public float boxBottom;
     public float boxTop;
-    [HideInInspector] public float halfWidth;
-    [HideInInspector] public float halfHeight;
+    public float halfWidth { get; private set; }
+    public float halfHeight { get; private set; }
     private void Awake()
     {
-        width = transform.localScale.x;
-        height = transform.localScale.y;
+        ChangeBoxDimensions(width, height);
 
         halfWidth = width * 0.5f;
         halfHeight = height * 0.5f;
@@ -30,7 +29,6 @@ public class MyBoxCollider : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // Dibujar la caja en el editor
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position, new Vector3(width, height, 0));
     }

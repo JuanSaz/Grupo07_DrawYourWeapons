@@ -44,17 +44,16 @@ public class Bullet : MonoBehaviour, IUpdatable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.CompareTag("Player"))
+        if (collision.TryGetComponent(out Player playerHit))
         {
-            if (collision.gameObject != immunePlayer)
-            {
-                UpdateManager.Instance.Unsubscribe(this);
-                Reset();
-                pool.Release(this);
-                var target = collision.gameObject.GetComponent<Player>();
-                target.GetKilled();
-            }
+            if (playerHit == immunePlayer) return;
+
+            UpdateManager.Instance.Unsubscribe(this);
+            Reset();
+            pool.Release(this);
+            playerHit.GetKilled();
         }
+
         if (collision.TryGetComponent<MyBoxCollider>(out MyBoxCollider otherBox))
         {
             dir = myColl.ProjectCircleOntoLine(otherBox, dir);
