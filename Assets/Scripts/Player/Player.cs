@@ -1,4 +1,5 @@
 using System.Net.Sockets;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour, IUpdatable
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float speedMultiplier = 1;
     [SerializeField] private SO_PlayerInput inputs;
+    [SerializeField] private TextMeshProUGUI UIName;
 
     private MyCircleCollider myColl;
     private ObjectPool<Bullet> bulletPool;
@@ -44,6 +46,8 @@ public class Player : MonoBehaviour, IUpdatable
         {
             Shoot();
         }
+
+        UIName.text = playerName;
     }
 
     private void Shoot()

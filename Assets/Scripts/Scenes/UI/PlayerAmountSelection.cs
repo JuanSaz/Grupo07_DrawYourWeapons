@@ -1,7 +1,10 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerAmountSelection : MonoBehaviour, IUpdatable
 {
+
+    [SerializeField] private TMP_InputField playerOne, playerTwo, playerThree, playerFour;
     private void Awake()
     {
         //UpdateManager.Instance.Subscribe(this);
@@ -11,8 +14,9 @@ public class PlayerAmountSelection : MonoBehaviour, IUpdatable
     {
         if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))  //Si presionó el 2 en numpad o normal
         {
+            SetNames();
             GameManager.Instance.SetPlayerAmount(2);
-
+           
             UpdateManager.Instance.Unsubscribe(this);
             SceneChanger.Instance.LoadScene("SampleScene");
             
@@ -20,8 +24,8 @@ public class PlayerAmountSelection : MonoBehaviour, IUpdatable
 
         if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))  //Si presionó el 3 en numpad o normal
         {
+            SetNames();
             GameManager.Instance.SetPlayerAmount(3);
-
             UpdateManager.Instance.Unsubscribe(this);
             SceneChanger.Instance.LoadScene("SampleScene");
            
@@ -29,8 +33,8 @@ public class PlayerAmountSelection : MonoBehaviour, IUpdatable
 
         if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))   //Si presionó el 4 en numpad o normal
         {
+            SetNames();
             GameManager.Instance.SetPlayerAmount(4);
-
             UpdateManager.Instance.Unsubscribe(this);
             SceneChanger.Instance.LoadScene("SampleScene");
            
@@ -42,5 +46,10 @@ public class PlayerAmountSelection : MonoBehaviour, IUpdatable
     {
         //UpdateManager.Instance.Unsubscribe(this);
         UpdateManager.Instance.Subscribe(this);
+    }
+
+    public void SetNames()
+    {
+        GameManager.Instance.ReciveNames(playerOne.text, playerTwo.text, playerThree.text, playerFour.text);
     }
 }

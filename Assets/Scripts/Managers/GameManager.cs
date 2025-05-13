@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    string playerOne, playerTwo, playerThree, playerFour;
     public static GameManager Instance { get; private set; }
     [SerializeField] private int playerAmount;
     public List<GameObject> playerPrefabs = new List<GameObject>();
@@ -29,5 +30,20 @@ public class GameManager : MonoBehaviour
         return playerAmount;
     }
 
-   
+   public void SetPlayerNames()
+    {
+        LevelManager.Instance.GetPlayerNames(playerOne, playerTwo, playerThree, playerFour);
+
+    }
+
+    public void ReciveNames(string one, string two, string three, string four)
+    {
+        playerOne = one;
+        playerTwo = two;
+        playerThree = three;
+        playerFour = four;
+    }
+    
+
+    
 }
