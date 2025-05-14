@@ -69,9 +69,9 @@ public class Player : MonoBehaviour, IUpdatable
     public void GetKilled()
     {
         isAlive = false;
-        gameObject.SetActive(false);
         UpdateManager.Instance.Unsubscribe(this);
         LevelManager.Instance.onPlayerKilled?.Invoke(this);
+        gameObject.SetActive(false);
     }
 
 
@@ -107,6 +107,7 @@ public class Player : MonoBehaviour, IUpdatable
     {
         if (collision.TryGetComponent<MyCircleCollider>(out MyCircleCollider other))
         {
+            if (collision.CompareTag("Bullets")) return;//Si es una bala, la bala lo mata pero el player no resuelve la col
             myColl.SolveCircleCollidingStaticCircle(other);
         }
 

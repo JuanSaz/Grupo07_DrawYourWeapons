@@ -58,14 +58,6 @@ public class Bullet : MonoBehaviour, IUpdatable
             dir = myColl.ProjectCircleOntoLine(otherBox, dir);
             immunePlayer = null;
         }
-
-        if(collision.TryGetComponent<MyCircleCollider>(out MyCircleCollider otherCircle))
-        {
-            if (otherCircle.IsCircleCollidingCircle(myColl))
-            {
-                dir = myColl.SolveDynamicCircleWithStaticCircle(otherCircle, dir);
-            }
-        }
     }
 
     

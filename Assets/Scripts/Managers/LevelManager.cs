@@ -83,23 +83,24 @@ public class LevelManager : MonoBehaviour
 
     private void ManagePlayerKilled(Player player)
     {
-
         activePlayers.Remove(player);
 
         if (activePlayers.Count == 1)
         {
             activePlayers[0].AddPoint();
-            GetPointsFromSurvivour(activePlayers[0]);
-
-            RestartRoundCor = StartCoroutine(RestartRoundAfterDelay(2f));
+            ManageRoundRestart(activePlayers[0]);
         }
     }
 
-    public void GetPointsFromSurvivour(Player survivour)
+    public void ManageRoundRestart(Player survivour)
     {
         if (survivour.Score == pointsToWin)
         {
             SetWinner(survivour);
+        }
+        else
+        {
+            RestartRoundCor = StartCoroutine(RestartRoundAfterDelay(2f));
         }
     }
 
