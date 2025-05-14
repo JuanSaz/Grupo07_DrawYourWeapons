@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
 
     public void SetWinner(Player Winner)
     {
-        Debug.Log("El ganador es " + Winner.PlayerName.ToUpper() + "!");
+        //Debug.Log("El ganador es " + Winner.PlayerName.ToUpper() + "!");
 
         UnsubscribeAllObjects();
         
