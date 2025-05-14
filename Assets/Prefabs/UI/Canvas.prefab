@@ -524,7 +524,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winnerName: {fileID: 353575406285092338}
   totalScore: {fileID: 6963658848201412897}
-  returnToMenuButton: {fileID: 0}
 --- !u!1 &5169362119411719770
 GameObject:
   m_ObjectHideFlags: 0
