@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        InstantiatorManager.Instance.Create(MyBehaviorType.Player).WakeUp();
     }
 
     public void SetPlayerAmount(int amount)
