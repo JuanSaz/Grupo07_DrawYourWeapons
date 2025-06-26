@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3735007481902715239}
   - component: {fileID: 4085657866201370834}
-  - component: {fileID: 2609650756390100353}
-  - component: {fileID: 8324228525368125215}
   - component: {fileID: 7289143060788723663}
   - component: {fileID: 6361218927469811617}
   m_Layer: 0
@@ -91,36 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2609650756390100353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3702918314655459904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a047ce6c79388e45bd7ddf0a8bfdde4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerName: PLAYER 4
-  movementSpeed: 5
-  rotationSpeed: 180
-  speedMultiplier: 1
-  inputs: {fileID: 11400000, guid: 52692ed3565d7e047be1523ebfc56793, type: 2}
---- !u!114 &8324228525368125215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3702918314655459904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1386da29f84d9845990e78c3f31cd7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 0
 --- !u!50 &7289143060788723663
 Rigidbody2D:
   serializedVersion: 5

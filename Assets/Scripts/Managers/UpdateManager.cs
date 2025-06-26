@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 public class UpdateManager : MonoBehaviour
 {
     private List<IUpdatable> scriptsToUpdate = new List<IUpdatable>();
+    private List<IFixUpdatable> scriptsToFixUpdate = new List<IFixUpdatable>();
 
     public static UpdateManager Instance { get; private set; }
 
@@ -34,10 +35,23 @@ public class UpdateManager : MonoBehaviour
         //Remueve a todos los que ya no están subscriptos
         scriptsToUpdate.RemoveAll(obj => obj == null);
     }
-
+    private void FixedUpdate()
+    {
+        for (int i = 0; i < scriptsToFixUpdate.Count; i++)
+        {
+            if (scriptsToFixUpdate[i] == null) continue;
+            scriptsToFixUpdate[i].FixUpdateMe(); //Updatea los scripts
+        }
+        //Remueve a todos los que ya no están subscriptos
+        scriptsToFixUpdate.RemoveAll(obj => obj == null);
+    }
     public void Subscribe(IUpdatable obj)
     {
         scriptsToUpdate.Add(obj);
+    }
+    public void FixSubscribe(IFixUpdatable obj)
+    {
+        scriptsToFixUpdate.Add(obj);
     }
 
     public void UnsubscribeAll()
@@ -45,6 +59,13 @@ public class UpdateManager : MonoBehaviour
         for (int i = 0; i < scriptsToUpdate.Count; i++)
         {
             scriptsToUpdate[i] = null;
+        }
+    }
+    public void FixUnsubscribeAll()
+    {
+        for (int i = 0; i < scriptsToFixUpdate.Count; i++)
+        {
+            scriptsToFixUpdate[i] = null;
         }
     }
 
@@ -57,5 +78,13 @@ public class UpdateManager : MonoBehaviour
             scriptsToUpdate[index] = null;
         }
     }
-    
+    public void FixUnsubscribe(IFixUpdatable obj)
+    {
+        int index = scriptsToFixUpdate.IndexOf(obj);
+
+        if (index >= 0)
+        {
+            scriptsToFixUpdate[index] = null;
+        }
+    }
 }

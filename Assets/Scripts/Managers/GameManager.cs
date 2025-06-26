@@ -43,7 +43,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator MyStart()
     {
         yield return null;
-        InstantiatorManager.Instance.Create(MyBehaviorType.Player).WakeUp();
+        InstantiatorManager.Instance.Create(MyBehaviorType.Player1).WakeUp();
+        InstantiatorManager.Instance.Create(MyBehaviorType.Player2).WakeUp();
     }
 
     public void SetPlayerCollidable(ICollidable collidable, bool active)

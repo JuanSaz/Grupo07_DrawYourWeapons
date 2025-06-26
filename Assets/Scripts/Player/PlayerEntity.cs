@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class PlayerEntity: Entity, IUpdatable, ICollidable
+public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
 {
     public SO_PlayerInput inputs;
     private Rigidbody2D rb;
@@ -22,17 +22,22 @@ public class PlayerEntity: Entity, IUpdatable, ICollidable
         base.WakeUp();
 
         rb = InstantiatorManager.Instance.GetComponentFrom<Rigidbody2D>(EntityGameObject);
-        circleCollider = new MyCircleCollider(colliderRadius);
+        circleCollider = new MyCircleCollider(colliderRadius, EntityGameObject);
         UpdateManager.Instance.Subscribe(this);
+        UpdateManager.Instance.FixSubscribe(this);
     }
     public void UpdateMe(float deltaTime)
     {
         Movement();
     }
+    public void FixUpdateMe()
+    {
+        Physics();
+    }
     private void Movement()
     {
-        float moveInput = Input.GetAxis("p1V");
-        float rotateInput = -Input.GetAxis("p1H");
+        float moveInput = Input.GetAxis(inputs.vertical);
+        float rotateInput = -Input.GetAxis(inputs.horizontal);
 
         EntityGameObject.transform.Rotate(0f, 0f, rotateInput * rotationSpeed * Time.deltaTime);
         EntityGameObject.transform.position += EntityGameObject.transform.up * (moveInput * movementSpeed * Time.deltaTime);
@@ -40,13 +45,14 @@ public class PlayerEntity: Entity, IUpdatable, ICollidable
 
     private void Physics()
     {
-        foreach(ICollidable collidable in GameManager.Instance.ActivePlayersColls)
+        foreach(ICollidable playerColl in GameManager.Instance.ActivePlayersColls)
         {
-            if(collidable == null || collidable.CollidableEntity == this) continue;//Si es nulo o es si mismo
-            if(MyCircleCollider.IsCircleCollidingCircle(collidable.MyCircleCollider))//Si esta colisionando con otro player
+            if(playerColl == null || playerColl.CollidableEntity == this) continue;//Si es nulo o es si mismo
+            if(MyCircleCollider.IsCircleCollidingCircle(playerColl.MyCircleCollider))//Si esta colisionando con otro player
             {
-                MyCircleCollider.SolveCircleCollidingStaticCircle(collidable.MyCircleCollider);//Mueve solo a este player
+                circleCollider.SolveCircleCollidingStaticCircle(playerColl.MyCircleCollider);//Mueve solo a este player
             }
         }
     }
+
 }

@@ -113,7 +113,7 @@ public class Player : MonoBehaviour, IUpdatable
 
         if (collision.TryGetComponent<MyBoxCollider>(out MyBoxCollider otherBox))
         {
-            myColl.SolveWithStaticBox(otherBox);
+            //myColl.SolveWithStaticBox(otherBox);
         }
     }
 }

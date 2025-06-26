@@ -55,7 +55,7 @@ public class Bullet : MonoBehaviour, IUpdatable
 
         if (collision.TryGetComponent<MyBoxCollider>(out MyBoxCollider otherBox))
         {
-            dir = myColl.ProjectCircleOntoLine(otherBox, dir);
+            //dir = myColl.ProjectCircleOntoLine(otherBox, dir);
             immunePlayer = null;
         }
     }

@@ -9,6 +9,6 @@ public class PlayerBehavior : MyBehavior
     {
         var player = new PlayerEntity();
         player.inputs = inputsRef;
-        return new PlayerEntity();
+        return player;
     }
 }

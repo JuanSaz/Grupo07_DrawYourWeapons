@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da204875963fd4e42b26691b1454fd3f, type: 3}
-  m_Name: PlayerBehavior
+  m_Name: Player3Behavior
   m_EditorClassIdentifier: 
-  type: 0
-  prefab: {fileID: 6777270378589352109, guid: 276765d34f12c5e42b940c1e4f8ff69c, type: 3}
-  inputsRef: {fileID: 11400000, guid: 109a0b7436b471e479d4cd74c4d2eaf5, type: 2}
+  type: 2
+  prefab: {fileID: 2796237724839472805, guid: 76c1b343ad0abb44ebf581bcbacedcf4, type: 3}
+  inputsRef: {fileID: 11400000, guid: 23ca1532cda9d444bba70e0a67ca83d2, type: 2}
