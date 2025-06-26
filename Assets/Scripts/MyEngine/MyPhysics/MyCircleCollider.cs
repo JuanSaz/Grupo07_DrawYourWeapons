@@ -9,12 +9,19 @@ public class MyCircleCollider : MonoBehaviour
     public float Radius => radius;
     Vector2 wallCollisionNormal;
 
+    public MyCircleCollider(float radius)
+    {
+        this.radius = radius;
+    }
 
     private void Awake()
     {
         TryGetComponent<CircleCollider2D>(out CircleCollider2D circleCollider);
         ChangeRadius(circleCollider.radius);
+
     }
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
