@@ -8,7 +8,7 @@ public class InstantiatorManager : MonoBehaviour
     public static InstantiatorManager Instance { get; private set; }
     [SerializeField] private List<MyBehavior> behaviors = new List<MyBehavior>();
     private Dictionary<MyBehaviorType, MyBehavior> behaviorDictionary = new Dictionary<MyBehaviorType, MyBehavior>();
-
+    public BulletPool bulletPool;
 
     void Awake()
     {
@@ -24,6 +24,7 @@ public class InstantiatorManager : MonoBehaviour
         {
             behaviorDictionary.Add(behavior.type, behavior);
         }
+        bulletPool = new BulletPool(MyBehaviorType.Bullet);
     }
 
     public Entity Create(MyBehaviorType behaviorType)

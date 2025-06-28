@@ -45,6 +45,10 @@ public class GameManager : MonoBehaviour
         yield return null;
         InstantiatorManager.Instance.Create(MyBehaviorType.Player1).WakeUp();
         InstantiatorManager.Instance.Create(MyBehaviorType.Player2).WakeUp();
+       // InstantiatorManager.Instance.Create(MyBehaviorType.Player3).WakeUp();
+       // InstantiatorManager.Instance.Create(MyBehaviorType.Player4).WakeUp();
+
+        InstantiatorManager.Instance.Create(MyBehaviorType.Bullet).WakeUp();
     }
 
     public void SetPlayerCollidable(ICollidable collidable, bool active)

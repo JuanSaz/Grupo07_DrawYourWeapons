@@ -28,7 +28,7 @@ public class Player : MonoBehaviour, IUpdatable
     {
         myColl = GetComponent<MyCircleCollider>();
         UpdateManager.Instance.Subscribe(this);
-        bulletPool = FindAnyObjectByType<BulletPool>().pool;
+        //bulletPool = FindAnyObjectByType<BulletPool>().pool;
 
         startPos = transform.position;
         startRot = transform.rotation;

@@ -2,36 +2,37 @@ using System;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class BulletPool : MonoBehaviour
+public class BulletPool
 {
-    [SerializeField] private Bullet bulletPrefab;
+    private MyBehaviorType bulletBehavior;
 
-    public ObjectPool<Bullet> pool;
+    public ObjectPool<BulletEntity> pool;
 
-    private void Awake()
+    public BulletPool(MyBehaviorType bulletBeh) 
     {
-        pool = new ObjectPool<Bullet>(CreatePoolItem, OnTakeFromPool, OnReturnedFromPool,OnDestroyPoolObject, false, 8 , 40);
+        bulletBehavior = bulletBeh;
+        pool = new ObjectPool<BulletEntity>(CreatePoolItem, OnTakeFromPool, OnReturnedFromPool, OnDestroyPoolObject, false, 8, 40);
     }
 
-    private void OnDestroyPoolObject(Bullet bullet)
+    private void OnDestroyPoolObject(BulletEntity bullet)
     {
-        Destroy(bullet.gameObject);
+        //Destroy(bullet.gameObject);
     }
 
-    private void OnReturnedFromPool(Bullet bullet)
+    private void OnReturnedFromPool(BulletEntity bullet)
     {
-        bullet.gameObject.SetActive(false);
+        bullet.EntityGameObject.SetActive(false);
     }
 
-    private void OnTakeFromPool(Bullet bullet)
+    private void OnTakeFromPool(BulletEntity bullet)
     {
-        bullet.gameObject.SetActive(true);
+        bullet.EntityGameObject.SetActive(true);
     }
 
-    private Bullet CreatePoolItem()
+    private BulletEntity CreatePoolItem()
     {
-        Bullet bullet = Instantiate(bulletPrefab);
-        bullet.gameObject.SetActive(false);
+        BulletEntity bullet = (BulletEntity)InstantiatorManager.Instance.Create(bulletBehavior);
+        bullet.EntityGameObject.SetActive(false);
         bullet.pool = pool;
         return bullet;
     }

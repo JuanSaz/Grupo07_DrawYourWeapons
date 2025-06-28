@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 
 public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
@@ -6,7 +7,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public SO_PlayerInput inputs;
     private Rigidbody2D rb;
     private MyCircleCollider circleCollider;
-    private float colliderRadius = 3f;
+    private float colliderRadius = 0.5f;
     private Vector2 dir = new Vector2(0,1);
     private float movementSpeed = 5.0f;
     private float rotationSpeed = 180f;
@@ -25,10 +26,15 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         circleCollider = new MyCircleCollider(colliderRadius, EntityGameObject);
         UpdateManager.Instance.Subscribe(this);
         UpdateManager.Instance.FixSubscribe(this);
+        GameManager.Instance.SetPlayerCollidable(this,true);
     }
     public void UpdateMe(float deltaTime)
     {
         Movement();
+        if (Input.GetButtonDown(inputs.shoot))
+        {
+            Shoot();
+        }
     }
     public void FixUpdateMe()
     {
@@ -42,7 +48,15 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         EntityGameObject.transform.Rotate(0f, 0f, rotateInput * rotationSpeed * Time.deltaTime);
         EntityGameObject.transform.position += EntityGameObject.transform.up * (moveInput * movementSpeed * Time.deltaTime);
     }
-
+    private void Shoot()
+    {
+        //var bullet = bulletPool.Get();
+        BulletEntity bullet = InstantiatorManager.Instance.bulletPool.pool.Get();
+        bullet.EntityGameObject.transform.SetPositionAndRotation(EntityGameObject.transform.position, EntityGameObject.transform.rotation);
+        bullet.dir = EntityGameObject.transform.up.normalized;
+        bullet.ImmunePlayer = this;
+        UpdateManager.Instance.Subscribe(bullet);
+    }
     private void Physics()
     {
         foreach(ICollidable playerColl in GameManager.Instance.ActivePlayersColls)
