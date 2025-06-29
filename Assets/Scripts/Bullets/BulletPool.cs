@@ -27,13 +27,17 @@ public class BulletPool
     private void OnTakeFromPool(BulletEntity bullet)
     {
         bullet.EntityGameObject.SetActive(true);
+        UpdateManager.Instance.Subscribe(bullet);
+        UpdateManager.Instance.FixSubscribe(bullet);
+        GameManager.Instance.ActiveBulletsColls.Add(bullet);
+        LevelManager.Instance.OnRoundRestart.AddListener(bullet.Reset);
     }
 
     private BulletEntity CreatePoolItem()
     {
         BulletEntity bullet = (BulletEntity)InstantiatorManager.Instance.Create(bulletBehavior);
+        bullet.WakeUp();
         bullet.EntityGameObject.SetActive(false);
-        bullet.pool = pool;
         return bullet;
     }
 }

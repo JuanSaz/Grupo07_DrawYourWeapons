@@ -43,12 +43,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator MyStart()
     {
         yield return null;
-        InstantiatorManager.Instance.Create(MyBehaviorType.Player1).WakeUp();
-        InstantiatorManager.Instance.Create(MyBehaviorType.Player2).WakeUp();
-       // InstantiatorManager.Instance.Create(MyBehaviorType.Player3).WakeUp();
-       // InstantiatorManager.Instance.Create(MyBehaviorType.Player4).WakeUp();
-
-        InstantiatorManager.Instance.Create(MyBehaviorType.Bullet).WakeUp();
     }
 
     public void SetPlayerCollidable(ICollidable collidable, bool active)
@@ -59,7 +53,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            activePlayersColls.Remove(collidable);
+            int index = activePlayersColls.IndexOf(collidable);
+
+            if (index >= 0)
+            {
+                activePlayersColls[index] = null;
+            }
         }
     }
     public void SetBulletCollidable(ICollidable collidable, bool active)
@@ -70,7 +69,12 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            activeBulletsColls.Remove(collidable);
+            int index = activeBulletsColls.IndexOf(collidable);
+
+            if (index >= 0)
+            {
+                activeBulletsColls[index] = null;
+            }
         }
     }
     public void SetWallCollidable(ICollidable collidable, bool active)
@@ -81,8 +85,27 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            activeWallsColls.Remove(collidable);
+            int index = activeWallsColls.IndexOf(collidable);
+
+            if (index >= 0)
+            {
+                activeWallsColls[index] = null;
+            }
         }
     }
-
+    public void DeactivateAllCollisions()
+    {
+        for (int i = 0; i < activeBulletsColls.Count; i++)
+        {
+            activeBulletsColls[i] = null;
+        }
+        for (int i = 0; i < activePlayersColls.Count; i++)
+        {
+            activeBulletsColls[i] = null;
+        }
+        for (int i = 0; i < activeWallsColls.Count; i++)
+        {
+            activeBulletsColls[i] = null;
+        }
+    }
 }

@@ -33,10 +33,9 @@ public class Player : MonoBehaviour, IUpdatable
         startPos = transform.position;
         startRot = transform.rotation;
 
-        LevelManager.Instance.ActivePlayers.Add(this);
-        LevelManager.Instance.TotalPlayers.Add(this);
+       // LevelManager.Instance.ActivePlayers.Add(this);
+       // LevelManager.Instance.TotalPlayers.Add(this);
     }
-
     public void UpdateMe(float deltaTime)
     {
         if (!isAlive) return;
@@ -70,7 +69,7 @@ public class Player : MonoBehaviour, IUpdatable
     {
         isAlive = false;
         UpdateManager.Instance.Unsubscribe(this);
-        LevelManager.Instance.onPlayerKilled?.Invoke(this);
+        //LevelManager.Instance.onPlayerKilled?.Invoke(this);
         gameObject.SetActive(false);
     }
 
@@ -91,7 +90,7 @@ public class Player : MonoBehaviour, IUpdatable
             transform.position = startPos;
             transform.rotation = startRot;
             UpdateManager.Instance.Subscribe(this);
-            LevelManager.Instance.ActivePlayers.Add(this);
+           // LevelManager.Instance.ActivePlayers.Add(this);
         }
 
         else

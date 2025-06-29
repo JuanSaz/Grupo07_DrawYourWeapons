@@ -44,6 +44,9 @@ public class UpdateManager : MonoBehaviour
         }
         //Remueve a todos los que ya no están subscriptos
         scriptsToFixUpdate.RemoveAll(obj => obj == null);
+        GameManager.Instance.ActivePlayersColls.RemoveAll(obj => obj == null);
+        GameManager.Instance.ActiveBulletsColls.RemoveAll(obj => obj == null);
+        GameManager.Instance.ActiveWallsColls.RemoveAll(obj => obj == null);
     }
     public void Subscribe(IUpdatable obj)
     {

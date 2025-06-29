@@ -3,7 +3,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum MyBehaviorType //SOLO TENER UN SO POR TIPO
+public enum MyBehaviorType //SOLO TENER UN SO POR TIPO, Al agregar a la lista, Reimportar Todos Los Assets
+    //Cuidado, require reinicio de programa y capaz se desarman todos los SO!
 {
     Player1, Player2, Player3,Player4,
     Bullet
