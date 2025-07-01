@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.AddressableAssets.Build;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -69,8 +70,6 @@ public class LevelManager : MonoBehaviour
 
     public void SetWinner(PlayerEntity Winner)
     {
-        //Debug.Log("El ganador es " + Winner.PlayerName.ToUpper() + "!");
-
         UnsubscribeAllObjects();
         
         WinInfo info = WinCanvas.GetComponent<WinInfo>();
@@ -81,6 +80,12 @@ public class LevelManager : MonoBehaviour
 
     private void ManagePlayerKilled(PlayerEntity player)
     {
+        if(player == null)
+        {
+            Debug.Log("SOY NULAZO");
+        }
+
+
         activePlayers.Remove(player);
 
         if (activePlayers.Count == 1)

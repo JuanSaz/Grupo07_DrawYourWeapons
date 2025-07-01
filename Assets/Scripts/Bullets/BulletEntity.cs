@@ -15,25 +15,26 @@ public class BulletEntity : Entity ,IUpdatable, IFixUpdatable, ICollidable
     public Vector2 dir = new Vector2(0, 1);
     private float movementSpeed = 5.0f;
     public Entity CollidableEntity => this;
-
     public MyCircleCollider MyCircleCollider => circleCollider;
     public MyBoxCollider MyBoxCollidier => null;
     public PlayerEntity ImmunePlayer { get => immunePlayer; set => immunePlayer = value; }
-
 
     public BulletEntity()
     {
         
     }
+
     public override void WakeUp()
     {
         base.WakeUp();
         circleCollider = new MyCircleCollider(colliderRadius, EntityGameObject);
     }
+
     public void UpdateMe(float deltaTime)
     {
         Move();
     }
+
     public void FixUpdateMe()
     {
         PhysicsUpdate();
@@ -65,6 +66,16 @@ public class BulletEntity : Entity ,IUpdatable, IFixUpdatable, ICollidable
                 Reset();
             }
         }
+
+        for (int i = 0; i < GameManager.Instance.ActiveWallsColls.Count; i++)
+        {
+            if (MyCircleCollider.IsBoxCollidingCircle(GameManager.Instance.ActiveWallsColls[i].MyBoxCollidier))//Si esta colisionando con un player
+            {
+                dir = MyCircleCollider.ProjectCircleOntoLine(GameManager.Instance.ActiveWallsColls[i].MyBoxCollidier, dir);
+                immunePlayer = null;
+            }
+        }
+
     }
 
     public void Reset()

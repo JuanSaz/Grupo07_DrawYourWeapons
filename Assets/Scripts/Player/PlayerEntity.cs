@@ -22,11 +22,11 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
 
     private bool isAlive = true;
     public bool IsAlive() => isAlive;
-    public Entity CollidableEntity => this;
 
     public int Score { get { return score; } set { score = value; } }
     public string PlayerName { get { return playerName; } set { playerName = value; } }
 
+    public Entity CollidableEntity => this;
     public MyCircleCollider MyCircleCollider => circleCollider;
     public MyBoxCollider MyBoxCollidier => null;
 
@@ -75,8 +75,8 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         bullet.EntityGameObject.transform.SetPositionAndRotation(EntityGameObject.transform.position, EntityGameObject.transform.rotation);
         bullet.dir = EntityGameObject.transform.up.normalized;
         bullet.ImmunePlayer = this;
-        
     }
+
     public void AddPoint()
     {
         score++;

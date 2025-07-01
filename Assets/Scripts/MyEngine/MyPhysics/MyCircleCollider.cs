@@ -48,7 +48,6 @@ public class MyCircleCollider
 
     public Vector2 ProjectCircleOntoLine(MyBoxCollider otherBox, Vector2 bulletDir)
     {
-
         Vector3 newPosition = HandleBoxCollision(otherBox);
         entity.transform.position = newPosition;
 
@@ -77,7 +76,6 @@ public class MyCircleCollider
 
         return distanceSquared <= radius * radius;
     }
-
     private Vector2 HandleBoxCollision(MyBoxCollider box)
     {
         Vector2 circleCenter = entity.transform.position;
@@ -86,12 +84,9 @@ public class MyCircleCollider
         float angle = -box.Entity.transform.eulerAngles.z * Mathf.Deg2Rad;
         Vector2 relativePosition = circleCenter - boxCenter;
 
-        float cos = Mathf.Cos(angle);
-        float sin = Mathf.Sin(angle);
-
         Vector2 localPos = new Vector2(
-            relativePosition.x * cos - relativePosition.y * sin,
-            relativePosition.x * sin + relativePosition.y * cos
+            relativePosition.x * Mathf.Cos(angle) - relativePosition.y * Mathf.Sin(angle),
+            relativePosition.x * Mathf.Sin(angle) + relativePosition.y * Mathf.Cos(angle)
         );
 
         float leftPenetration = (localPos.x + radius) + box.halfWidth;
@@ -99,11 +94,13 @@ public class MyCircleCollider
         float bottomPenetration = (localPos.y + radius) + box.halfHeight;
         float topPenetration = box.halfHeight - (localPos.y - radius);
 
+        //Calcula cual es la colision con el lado mas cercano, a partir de ese lado se hacen los calculos de reposicion
         float minPenetration = Mathf.Min(leftPenetration, rightPenetration, bottomPenetration, topPenetration);
 
         Vector2 localNormal = Vector2.zero;
         Vector2 localPosCorrected = localPos;
 
+        //Asigna normal de choque dependiendo del lado golpeado
         if (minPenetration == leftPenetration)
         {
             localNormal = Vector2.left;
@@ -126,21 +123,19 @@ public class MyCircleCollider
         }
 
         Vector2 correctedRelativePos = new Vector2(
-            localPosCorrected.x * cos + localPosCorrected.y * sin,
-            -localPosCorrected.x * sin + localPosCorrected.y * cos
+            localPosCorrected.x * Mathf.Cos(angle) + localPosCorrected.y * Mathf.Sin(angle),
+            -localPosCorrected.x * Mathf.Sin(angle) + localPosCorrected.y * Mathf.Cos(angle)
         );
 
         Vector2 correctedWorldPos = boxCenter + correctedRelativePos;
 
         wallCollisionNormal = new Vector2(
-            localNormal.x * cos + localNormal.y * sin,
-            -localNormal.x * sin + localNormal.y * cos
+            localNormal.x * Mathf.Cos(angle) + localNormal.y * Mathf.Sin(angle),
+            -localNormal.x * Mathf.Sin(angle) + localNormal.y * Mathf.Cos(angle)
         ).normalized;
 
         return correctedWorldPos;
     }
-
-
     public void ChangeRadius(float rad)
     {
         radius = rad;
