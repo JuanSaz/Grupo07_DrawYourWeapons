@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.U2D;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
 
@@ -29,6 +30,9 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public Entity CollidableEntity => this;
     public MyCircleCollider MyCircleCollider => circleCollider;
     public MyBoxCollider MyBoxCollidier => null;
+
+  
+
 
     public PlayerEntity() 
     {
