@@ -8,6 +8,7 @@ public class PlayerBehavior : MyBehavior
     public override Entity CreateEntity()
     {
         var player = new PlayerEntity();
+        player.playerBehavior = this;
         player.inputs = inputsRef;
         return player;
     }

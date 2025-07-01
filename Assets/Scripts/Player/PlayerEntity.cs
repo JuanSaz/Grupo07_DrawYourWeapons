@@ -6,6 +6,7 @@ using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
 {
+    public PlayerBehavior playerBehavior;
     public SO_PlayerInput inputs;
     private MyCircleCollider circleCollider;
     private float colliderRadius = 0.5f;

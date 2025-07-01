@@ -39,6 +39,7 @@ public class LevelManager : MonoBehaviour
         Instance = this;
 
         StartCoroutine(MyStart());
+
     }
     private IEnumerator MyStart()
     {
@@ -83,6 +84,7 @@ public class LevelManager : MonoBehaviour
         if (activePlayers.Count == 1)
         {
             activePlayers[0].AddPoint();
+            UIManager.Instance.onScoreChanged.Invoke(activePlayers[0]);
             ManageRoundRestart(activePlayers[0]);
         }
     }

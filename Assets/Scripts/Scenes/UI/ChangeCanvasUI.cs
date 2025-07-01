@@ -10,12 +10,12 @@ public class ChangeCanvasUI: MonoBehaviour
     {
         foreach (GameObject canvas in ActivateList)
         {
-            canvas.SetActive(true);
+            canvas.GetComponent<Canvas>().enabled = true;
         }
 
         foreach (GameObject canvas in DeactivateList)
         {
-            canvas.SetActive(false);
+            canvas.GetComponent<Canvas>().enabled = false;
         }
     }
 }
