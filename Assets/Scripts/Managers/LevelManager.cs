@@ -29,7 +29,8 @@ public class LevelManager : MonoBehaviour
 
     public UnityEvent OnRoundRestart = new UnityEvent();
     private LevelInfoSO currentLevelInfo;
-
+    [SerializeField] private LevelInfoSO levelBordersInfo;
+    private int previousRandomIndex = -1;
 
     void Awake()
     {
@@ -52,6 +53,7 @@ public class LevelManager : MonoBehaviour
         onPlayerKilled += ManagePlayerKilled;
         SelectRandomMap();
         InstantiateWalls();
+        InstatiateLevelBorders();
     }
 
     public void SpawnPlayers()
@@ -105,6 +107,19 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void InstatiateLevelBorders()
+    {
+        for (int i = 0; i < levelBordersInfo.wallPositions.Length; i++)
+        {
+            Entity borderEntity = InstantiatorManager.Instance.Create(MyBehaviorType.Border);
+            borderEntity.EntityGameObject.transform.position = new Vector3(levelBordersInfo.wallPositions[i].x, levelBordersInfo.wallPositions[i].y, 0f);
+
+            Vector3 currentEuler = borderEntity.EntityGameObject.transform.rotation.eulerAngles;
+            borderEntity.EntityGameObject.transform.rotation = Quaternion.Euler(currentEuler.x, currentEuler.y, levelBordersInfo.wallPositions[i].z);
+            borderEntity.WakeUp();
+        }
+    }
+
     private IEnumerator RestartRoundAfterDelay(float delay)
     {
 
@@ -119,13 +134,22 @@ public class LevelManager : MonoBehaviour
         UpdateManager.Instance.UnsubscribeAll();
         activePlayers.Clear();
     }
-
     public void SelectRandomMap()
     {
-        int random = UnityEngine.Random.Range(0, InstantiatorManager.Instance.objectsToPreload.Count);
+        int count = InstantiatorManager.Instance.objectsToPreload.Count;
+        int random = UnityEngine.Random.Range(0, count);
+
+        if (count > 1)
+        {
+            while (random == previousRandomIndex)
+            {
+                random = UnityEngine.Random.Range(0, count);
+            }
+        }
+
+        previousRandomIndex = random;
         currentLevelInfo = (LevelInfoSO)InstantiatorManager.Instance.objectsToPreload[random].OperationHandle.Result;
     }
-
     private void InstantiateWalls()
     {
         for (int i = 0; i < currentLevelInfo.wallPositions.Length; i++)
@@ -139,7 +163,6 @@ public class LevelManager : MonoBehaviour
             wallEntity.WakeUp();
         }
     }
-
     public void UnloadWalls()
     {
         for (int i = 0; i < activeWalls.Count; i++)

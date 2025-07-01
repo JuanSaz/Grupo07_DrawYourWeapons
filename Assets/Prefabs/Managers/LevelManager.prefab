@@ -53,8 +53,13 @@ MonoBehaviour:
   - {fileID: 7964253110442519553}
   - {fileID: 743551473466088591}
   - {fileID: 7042441067316998154}
+  playerBehaviorTypes: 00000000010000000200000003000000
   WinCanvas: {fileID: 0}
   pointsToWin: 3
+  OnRoundRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  levelBordersInfo: {fileID: 11400000, guid: 87a4da1b5aea0d14395b7ede3daacb7d, type: 2}
 --- !u!1 &2394757518027662008
 GameObject:
   m_ObjectHideFlags: 0

@@ -56,23 +56,6 @@ public class InstantiatorManager : MonoBehaviour
         foreach (AssetReference assetReference in objectsToPreload)
         {
             AsyncOperationHandle handle = assetReference.LoadAssetAsync<ScriptableObject>();
-            handle.Completed += op => OnAddressableLoaded(op, objectsToPreload.Count);    //Llama al evento para saber cuando termino de precargar ESE Addressable asset
         }
     }
-
-    private void OnAddressableLoaded(AsyncOperationHandle handle, int totalToPreload)  //Cada Addressable va a llamar esta funcion
-    {
-        assetsPreloadedAmount++;
-
-        if (assetsPreloadedAmount == totalToPreload)
-        {
-            OnAllAddressablesPreloaded();
-        }
-    }
-
-    private void OnAllAddressablesPreloaded()
-    {
-        Debug.Log("Todos los assets fueron precargados");
-    }
-
 }
