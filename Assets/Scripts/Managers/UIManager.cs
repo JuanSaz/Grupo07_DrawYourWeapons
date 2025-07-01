@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
+using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
@@ -58,9 +60,13 @@ public class UIManager : MonoBehaviour
     [Header("HUDUI")]
     [SerializeField] private SO_Button[] HUDUIButtonsSO = new SO_Button[4];
 
+    [Header("WinUI")]
+    [SerializeField] private SO_Button[] WinUIButtonsSO = new SO_Button[4];
+
     private E_UIScreens currentUI = E_UIScreens.MainMenuUI;
 
     public UnityEvent<PlayerEntity> onScoreChanged;
+    public UnityEvent<PlayerEntity> onPlayerWon;
 
     void Awake()
     {   
@@ -85,11 +91,14 @@ public class UIManager : MonoBehaviour
         ChangeUIScreen(E_UIScreens.MainMenuUI);
 
         onScoreChanged.AddListener(AddPointToHUD);
+
+        onPlayerWon.AddListener(PlayerWon);
     }
 
     private void OnInteraction(Button button, SO_Button SO_button)
     {
-        switch (SO_button.actionToExecute)
+        var action = SO_button.actionToExecute;
+        switch (action)
         {
             case E_ButtonActions.Play:
                 ChangeUIScreen(E_UIScreens.SelectionScreenUI);
@@ -104,21 +113,52 @@ public class UIManager : MonoBehaviour
                 break;
 
             case E_ButtonActions.BackToMenu:
+                if (GameManager.Instance.currentScene != "MenuScene")
+                {
+                    SceneChanger.Instance.LoadScene("MenuScene");
+                }
                 ChangeUIScreen(E_UIScreens.MainMenuUI);
                 break;
 
             case E_ButtonActions.TwoPlayers:
-                SelectPlayer(2);
+                var two = 2;
+                SelectPlayer(two);
+                for (int i = 0; i < HUDUIButtonsSO.Length; i++)
+                {     
+                    HUDUIButtonsSO[i].isActive = false;
+                }
+                for (int j = 0; j < two; j++)
+                {
+                    HUDUIButtonsSO[j].isActive = true;
+                }
                 ChangeUIScreen(E_UIScreens.HUDUI);
                 break;
 
             case E_ButtonActions.ThreePlayers:
-                SelectPlayer(3);
+                var three = 3;
+                SelectPlayer(three);
+                for (int i = 0; i < HUDUIButtonsSO.Length; i++)
+                {
+                    HUDUIButtonsSO[i].isActive = false;
+                }
+                for (int j = 0; j < three; j++)
+                {
+                    HUDUIButtonsSO[j].isActive = true;
+                }
                 ChangeUIScreen(E_UIScreens.HUDUI);
                 break;
 
             case E_ButtonActions.FourPlayers:
+                var four = 4;
                 SelectPlayer(4);
+                for (int i = 0; i < HUDUIButtonsSO.Length; i++)
+                {
+                    HUDUIButtonsSO[i].isActive = false;
+                }
+                for (int j = 0; j < four; j++)
+                {
+                    HUDUIButtonsSO[j].isActive = true;
+                }
                 ChangeUIScreen(E_UIScreens.HUDUI);
                 break;
         }
@@ -154,6 +194,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void PlayerWon(PlayerEntity winner)
+    {
+        WinUIButtonsSO[0].text = winner.PlayerName + " WON!";
+        WinUIButtonsSO[0].textColor = winner.EntityColor;
+        ChangeUIScreen(E_UIScreens.WinUI);
+    }
+
     public void ExitGame()
     {
         SceneChanger.Instance.QuitGame();
@@ -179,7 +226,7 @@ public class UIManager : MonoBehaviour
                     {
                         buttonsComponent[i].onClick.AddListener(() => OnInteraction(buttonsComponent[index], MainMenuUIButtonsSO[index]));
                     }
-                    buttonsComponent[i].enabled = MainMenuUIButtonsSO[i].isActive;
+                    textsComponent[i].enabled = MainMenuUIButtonsSO[i].isActive;
                 }
                 break;
 
@@ -198,12 +245,11 @@ public class UIManager : MonoBehaviour
                     {
                         buttonsComponent[i].onClick.AddListener(() => OnInteraction(buttonsComponent[index], SelectionScreenUIButtonsSO[index]));
                     }
-                    buttonsComponent[i].enabled = SelectionScreenUIButtonsSO[i].isActive;
+                    textsComponent[i].enabled = SelectionScreenUIButtonsSO[i].isActive;
                 }
                 break;
 
             case E_UIScreens.HUDUI:
-                currentBackground.sprite = backgroundImages[2];
                 currentBackground.enabled = false;
                 for (int i = 0; i < buttons.Length; i++)
                 {
@@ -217,9 +263,30 @@ public class UIManager : MonoBehaviour
                     {
                         buttonsComponent[i].onClick.AddListener(() => OnInteraction(buttonsComponent[index], HUDUIButtonsSO[index]));
                     }
-                    buttonsComponent[i].enabled = HUDUIButtonsSO[i].isActive;
+                    textsComponent[i].enabled = HUDUIButtonsSO[i].isActive;
                 }
                 break;
+
+            case E_UIScreens.WinUI:
+                currentBackground.sprite = backgroundImages[2];
+                currentBackground.enabled = true;
+                for (int i = 0; i < buttons.Length; i++)
+                {
+                    var index = i;
+                    buttonsComponent[i].onClick.RemoveAllListeners();
+                    buttons[i].transform.SetParent(layoutGroup[3].transform);
+                    textsComponent[i].text = WinUIButtonsSO[i].text;
+                    textsComponent[i].color = WinUIButtonsSO[i].textColor;
+                    buttonsComponent[i].interactable = WinUIButtonsSO[i].isInteractable;
+                    if (buttonsComponent[i].interactable)
+                    {
+                        buttonsComponent[i].onClick.AddListener(() => OnInteraction(buttonsComponent[index], WinUIButtonsSO[index]));
+                    }
+                    textsComponent[i].enabled = WinUIButtonsSO[i].isActive;
+                }
+                break;
+
+
         }
     }
 

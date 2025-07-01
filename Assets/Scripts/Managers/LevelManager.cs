@@ -76,11 +76,13 @@ public class LevelManager : MonoBehaviour
     public void SetWinner(PlayerEntity Winner)
     {
         UnsubscribeAllObjects();
-        
-        WinInfo info = WinCanvas.GetComponent<WinInfo>();
+
+        UIManager.Instance.onPlayerWon.Invoke(Winner);
+
+        /*WinInfo info = WinCanvas.GetComponent<WinInfo>();
 
         info.SetWinnerNameAndScore(Winner.PlayerName, Winner.Score);
-        WinCanvas.SetActive(true);
+        WinCanvas.SetActive(true);*/
     }
 
     private void ManagePlayerKilled(PlayerEntity player)

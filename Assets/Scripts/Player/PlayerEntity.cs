@@ -17,6 +17,8 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
 
     private Vector3 startPos;
     private Quaternion startRot;
+    private Color entityColor;
+    public Color EntityColor => entityColor;
 
     private string playerName;
     private int score = 0;
@@ -30,9 +32,6 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public Entity CollidableEntity => this;
     public MyCircleCollider MyCircleCollider => circleCollider;
     public MyBoxCollider MyBoxCollidier => null;
-
-  
-
 
     public PlayerEntity() 
     {
@@ -49,6 +48,8 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         UpdateManager.Instance.Subscribe(this);
         UpdateManager.Instance.FixSubscribe(this);
         GameManager.Instance.SetPlayerCollidable(this,true);
+
+        CheckColor(playerBehavior.type);
 
         startPos = EntityGameObject.transform.position;
         startRot = EntityGameObject.transform.rotation;
@@ -84,6 +85,25 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public void AddPoint()
     {
         score++;
+    }
+
+    private void CheckColor(MyBehaviorType playerType)
+    {
+        switch (playerType)
+        {
+            case MyBehaviorType.Player1:
+                entityColor = new Color(0.254902f, 0.2901961f, 0.7019608f);
+                break;
+            case MyBehaviorType.Player2:
+                entityColor = new Color(0.9333333f, 0.1294118f, 0.1294118f);
+                break;
+            case MyBehaviorType.Player3:
+                entityColor = new Color(0.8392157f, 0.7450981f, 0.254902f);
+                break;
+            case MyBehaviorType.Player4:
+                entityColor = new Color(0.2352941f, 0.6588235f, 0.04705882f);
+                break;
+        }
     }
 
     public void GetKilled()

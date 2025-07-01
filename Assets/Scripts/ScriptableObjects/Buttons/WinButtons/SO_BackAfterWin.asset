@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: efe9240ce94e5ba4b8f7504ade5c4ab4, type: 3}
-  m_Name: SO_Player4Points
+  m_Name: SO_BackAfterWin
   m_EditorClassIdentifier: 
-  text: 'Player 4:'
-  textColor: {r: 0.23529412, g: 0.65882355, b: 0.047058824, a: 1}
-  isInteractable: 0
-  isActive: 0
-  actionToExecute: 0
+  text: Back to Menu
+  textColor: {r: 0, g: 0, b: 0, a: 1}
+  isInteractable: 1
+  isActive: 1
+  actionToExecute: 3

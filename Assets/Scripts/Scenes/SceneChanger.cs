@@ -20,6 +20,7 @@ public class SceneChanger : MonoBehaviour
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
+        GameManager.Instance.currentScene = sceneName;
     }
 
     public void QuitGame()

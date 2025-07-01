@@ -7,6 +7,7 @@ public class ChangeSceneUI: MonoBehaviour
     public void ChangeScene()
     {
         SceneChanger.Instance.LoadScene(sceneName);
+        GameManager.Instance.currentScene = sceneName;
     }
 
     public void ExitGame()

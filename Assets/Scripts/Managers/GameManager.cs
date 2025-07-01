@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public string currentScene;
     public static GameManager Instance { get; private set; }
     public List<ICollidable> ActivePlayersColls { get => activePlayersColls;}
     public List<ICollidable> ActiveBulletsColls { get => activeBulletsColls;}
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         StartCoroutine(MyStart());
+
+        currentScene = SceneManager.GetActiveScene().name;
     }
 
     public void SetPlayerAmount(int amount)
