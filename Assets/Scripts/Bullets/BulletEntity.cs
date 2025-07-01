@@ -17,8 +17,9 @@ public class BulletEntity : Entity ,IUpdatable, IFixUpdatable, ICollidable
     public Entity CollidableEntity => this;
 
     public MyCircleCollider MyCircleCollider => circleCollider;
-
+    public MyBoxCollider MyBoxCollidier => null;
     public PlayerEntity ImmunePlayer { get => immunePlayer; set => immunePlayer = value; }
+
 
     public BulletEntity()
     {

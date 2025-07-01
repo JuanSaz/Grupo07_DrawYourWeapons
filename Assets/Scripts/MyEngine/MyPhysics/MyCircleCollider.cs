@@ -40,62 +40,105 @@ public class MyCircleCollider
 
         return normal * (dot * 2);
     }
-    //public void SolveWithStaticBox(MyBoxCollider box)
-    //{
-    //    Vector3 newPosition = HandleBoxCollision(box);
-    //    entity.transform.position = newPosition;
-    //}
+    public void SolveWithStaticBox(MyBoxCollider box)
+    {
+        Vector3 newPosition = HandleBoxCollision(box);
+        entity.transform.position = newPosition;
+    }
 
-    //public Vector2 ProjectCircleOntoLine(MyBoxCollider otherBox, Vector2 bulletDir)
-    //{
+    public Vector2 ProjectCircleOntoLine(MyBoxCollider otherBox, Vector2 bulletDir)
+    {
 
-    //    Vector3 newPosition = HandleBoxCollision(otherBox);
-    //    entity.transform.position = newPosition;
+        Vector3 newPosition = HandleBoxCollision(otherBox);
+        entity.transform.position = newPosition;
 
-    //    float dot = Vector2.Dot(bulletDir, wallCollisionNormal);
-    //    return bulletDir - 2 * dot * wallCollisionNormal; //Mantengo el mismo sentido de la dirección paralela e invierto la perpendicular a la normal
-    //}
+        float dot = Vector2.Dot(bulletDir, wallCollisionNormal);
+        return bulletDir - 2 * dot * wallCollisionNormal; //Mantengo el mismo sentido de la dirección paralela e invierto la perpendicular a la normal
+    }
 
-    //private Vector2 HandleBoxCollision(MyBoxCollider box)
-    //{
-    //    Vector3 position = entity.transform.position;
-    //    Vector2 boxPos = box.position;
+    public bool IsBoxCollidingCircle(MyBoxCollider box)
+    {
+        Vector2 circleCenter = entity.transform.position;  
+        Vector2 boxCenter = box.Entity.transform.position;  
 
-    //    // Calculamos las distancias a cada borde de la caja
-    //    float leftPenetration = entity.transform.position.x - (box.boxLeft - radius);
-    //    float rightPenetration = (box.boxRight + radius) - entity.transform.position.x;
-    //    float bottomPenetration = entity.transform.position.y - (box.boxBottom - radius);
-    //    float topPenetration = (box.boxTop + radius) - entity.transform.position.y;
+        float angle = -box.Entity.transform.eulerAngles.z * Mathf.Deg2Rad; 
+        Vector2 relativePosition = circleCenter - boxCenter;
 
-    //    //Elige donde hay más penetración de las cuatro paredes para determinar donde chocó                                                                                                  
-    //    float minPenetration = Mathf.Min(leftPenetration, rightPenetration, bottomPenetration, topPenetration);
+        Vector2 localCirclePos = new Vector2(
+            relativePosition.x * Mathf.Cos(angle) - relativePosition.y * Mathf.Sin(angle),
+            relativePosition.x * Mathf.Sin(angle) + relativePosition.y * Mathf.Cos(angle)
+        );
 
+        float clampedX = Mathf.Clamp(localCirclePos.x, -box.halfWidth, box.halfWidth);
+        float clampedY = Mathf.Clamp(localCirclePos.y, -box.halfHeight, box.halfHeight);
 
-    //    wallCollisionNormal = Vector2.zero; //Normal del lado que golpeó
+        Vector2 closestPoint = new Vector2(clampedX, clampedY);
+        float distanceSquared = (localCirclePos - closestPoint).sqrMagnitude;
 
-    //    if (minPenetration == leftPenetration)
-    //    {
-    //        wallCollisionNormal = Vector2.left;
-    //        position.x = box.boxLeft - radius;
-    //    }
-    //    else if (minPenetration == rightPenetration)
-    //    {
-    //        wallCollisionNormal = Vector2.right;
-    //        position.x = box.boxRight + radius;
-    //    }
-    //    else if (minPenetration == bottomPenetration)
-    //    {
-    //        wallCollisionNormal = Vector2.down;
-    //        position.y = box.boxBottom - radius;
-    //    }
-    //    else
-    //    {
-    //        wallCollisionNormal = Vector2.up;
-    //        position.y = box.boxTop + radius;
-    //    }
+        return distanceSquared <= radius * radius;
+    }
 
-    //    return position; //Devuelve la posición "acomodada"
-    //}
+    private Vector2 HandleBoxCollision(MyBoxCollider box)
+    {
+        Vector2 circleCenter = entity.transform.position;
+        Vector2 boxCenter = box.Entity.transform.position;
+
+        float angle = -box.Entity.transform.eulerAngles.z * Mathf.Deg2Rad;
+        Vector2 relativePosition = circleCenter - boxCenter;
+
+        float cos = Mathf.Cos(angle);
+        float sin = Mathf.Sin(angle);
+
+        Vector2 localPos = new Vector2(
+            relativePosition.x * cos - relativePosition.y * sin,
+            relativePosition.x * sin + relativePosition.y * cos
+        );
+
+        float leftPenetration = (localPos.x + radius) + box.halfWidth;
+        float rightPenetration = box.halfWidth - (localPos.x - radius);
+        float bottomPenetration = (localPos.y + radius) + box.halfHeight;
+        float topPenetration = box.halfHeight - (localPos.y - radius);
+
+        float minPenetration = Mathf.Min(leftPenetration, rightPenetration, bottomPenetration, topPenetration);
+
+        Vector2 localNormal = Vector2.zero;
+        Vector2 localPosCorrected = localPos;
+
+        if (minPenetration == leftPenetration)
+        {
+            localNormal = Vector2.left;
+            localPosCorrected.x = -box.halfWidth - radius;
+        }
+        else if (minPenetration == rightPenetration)
+        {
+            localNormal = Vector2.right;
+            localPosCorrected.x = box.halfWidth + radius;
+        }
+        else if (minPenetration == bottomPenetration)
+        {
+            localNormal = Vector2.down;
+            localPosCorrected.y = -box.halfHeight - radius;
+        }
+        else
+        {
+            localNormal = Vector2.up;
+            localPosCorrected.y = box.halfHeight + radius;
+        }
+
+        Vector2 correctedRelativePos = new Vector2(
+            localPosCorrected.x * cos + localPosCorrected.y * sin,
+            -localPosCorrected.x * sin + localPosCorrected.y * cos
+        );
+
+        Vector2 correctedWorldPos = boxCenter + correctedRelativePos;
+
+        wallCollisionNormal = new Vector2(
+            localNormal.x * cos + localNormal.y * sin,
+            -localNormal.x * sin + localNormal.y * cos
+        ).normalized;
+
+        return correctedWorldPos;
+    }
 
 
     public void ChangeRadius(float rad)

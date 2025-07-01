@@ -1,12 +1,14 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MyBoxCollider : MonoBehaviour
+public class MyBoxCollider
 {
     [SerializeField] private float width;
     [SerializeField] private float height;
+    private GameObject entity;
+    public GameObject Entity => entity;
 
-    public Vector2 position => transform.position;
+    public Vector2 position => Entity.transform.position;
     public float Width { get => width; }
     public float Height { get => height; }
     public float boxRight;
@@ -15,9 +17,12 @@ public class MyBoxCollider : MonoBehaviour
     public float boxTop;
     public float halfWidth { get; private set; }
     public float halfHeight { get; private set; }
-    private void Awake()
+
+    public MyBoxCollider(float width, float height, GameObject entity)
     {
-        ChangeBoxDimensions(transform.localScale.x, transform.localScale.y);
+        this.width = width;
+        this.height = height;
+        this.entity = entity;
 
         halfWidth = width * 0.5f;
         halfHeight = height * 0.5f;
@@ -27,11 +32,6 @@ public class MyBoxCollider : MonoBehaviour
         boxTop = position.y + halfHeight;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, new Vector3(width, height, 0));
-    }
     public void ChangeBoxDimensions(float width, float height)
     {
        this.width = width;

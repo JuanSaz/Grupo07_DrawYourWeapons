@@ -28,6 +28,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public string PlayerName { get { return playerName; } set { playerName = value; } }
 
     public MyCircleCollider MyCircleCollider => circleCollider;
+    public MyBoxCollider MyBoxCollidier => null;
 
     public PlayerEntity() 
     {
@@ -117,6 +118,14 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
             if (MyCircleCollider.IsCircleCollidingCircle(GameManager.Instance.ActivePlayersColls[i].MyCircleCollider))//Si esta colisionando con otro player
             {
                 circleCollider.SolveCircleCollidingStaticCircle(GameManager.Instance.ActivePlayersColls[i].MyCircleCollider);//Mueve solo a este player
+            }
+        }
+
+        for (int i = 0; i < GameManager.Instance.ActiveWallsColls.Count; i++)
+        {
+            if (MyCircleCollider.IsBoxCollidingCircle(GameManager.Instance.ActiveWallsColls[i].MyBoxCollidier))
+            {
+                MyCircleCollider.SolveWithStaticBox(GameManager.Instance.ActiveWallsColls[i].MyBoxCollidier);
             }
         }
     }

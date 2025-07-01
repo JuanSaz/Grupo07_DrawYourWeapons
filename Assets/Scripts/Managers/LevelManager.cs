@@ -45,6 +45,8 @@ public class LevelManager : MonoBehaviour
     {
         yield return null;
         SpawnPlayers();
+
+        InstantiatorManager.Instance.Create(MyBehaviorType.LevelSetup).WakeUp();    //Instancia y corre WakeUp del Level Setup
         onPlayerKilled += ManagePlayerKilled;
     }
 
