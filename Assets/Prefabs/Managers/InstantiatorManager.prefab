@@ -50,3 +50,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 205ffb01ab0f63d499b710a0562d506e, type: 2}
   - {fileID: 11400000, guid: 58aeca691f4cc6f4c827aab06fdf887f, type: 2}
   - {fileID: 11400000, guid: 7d9bca5915a60dd4db0b03b1229d9437, type: 2}
+  - {fileID: 11400000, guid: d5d08d97ad6e1234eaf6e9382e42b9e4, type: 2}
+  objectsToPreload:
+  - m_AssetGUID: f0f24ae1bc0d537419ddfae27b0e54b4
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: c9152934af046a346a89a03bf5f5a071
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 1e4829aea8e51af41b5b9dfcb3b209de
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1

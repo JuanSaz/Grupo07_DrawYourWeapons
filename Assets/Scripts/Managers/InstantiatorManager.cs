@@ -2,13 +2,20 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class InstantiatorManager : MonoBehaviour
 {
     public static InstantiatorManager Instance { get; private set; }
     [SerializeField] private List<MyBehavior> behaviors = new List<MyBehavior>();
     private Dictionary<MyBehaviorType, MyBehavior> behaviorDictionary = new Dictionary<MyBehaviorType, MyBehavior>();
+
+    [SerializeField] public List<AssetReference> objectsToPreload;
+    private int assetsPreloadedAmount;
+
     public BulletPool bulletPool;
+    public WallPool wallPool;
 
     void Awake()
     {
@@ -25,6 +32,7 @@ public class InstantiatorManager : MonoBehaviour
             behaviorDictionary.Add(behavior.type, behavior);
         }
         bulletPool = new BulletPool(MyBehaviorType.Bullet);
+        wallPool = new WallPool(MyBehaviorType.Wall);
     }
 
     public Entity Create(MyBehaviorType behaviorType)
@@ -40,4 +48,31 @@ public class InstantiatorManager : MonoBehaviour
     {
         return go.GetComponent<T>();
     }
+
+    public void PreloadAddressables()
+    {
+        assetsPreloadedAmount = 0;      //Empieza el contador en cero
+
+        foreach (AssetReference assetReference in objectsToPreload)
+        {
+            AsyncOperationHandle handle = assetReference.LoadAssetAsync<ScriptableObject>();
+            handle.Completed += op => OnAddressableLoaded(op, objectsToPreload.Count);    //Llama al evento para saber cuando termino de precargar ESE Addressable asset
+        }
+    }
+
+    private void OnAddressableLoaded(AsyncOperationHandle handle, int totalToPreload)  //Cada Addressable va a llamar esta funcion
+    {
+        assetsPreloadedAmount++;
+
+        if (assetsPreloadedAmount == totalToPreload)
+        {
+            OnAllAddressablesPreloaded();
+        }
+    }
+
+    private void OnAllAddressablesPreloaded()
+    {
+        Debug.Log("Todos los assets fueron precargados");
+    }
+
 }

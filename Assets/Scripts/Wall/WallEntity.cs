@@ -16,6 +16,5 @@ public class WallEntity : Entity, ICollidable
     {
         base.WakeUp();
         boxCollider = new MyBoxCollider(wallWidth, wallHeight, EntityGameObject);
-        GameManager.Instance.SetWallCollidable(this, true);
     }
 }

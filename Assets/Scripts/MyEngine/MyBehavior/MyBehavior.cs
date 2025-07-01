@@ -7,7 +7,7 @@ public enum MyBehaviorType //SOLO TENER UN SO POR TIPO, Al agregar a la lista, R
     //Cuidado, require reinicio de programa y capaz se desarman todos los SO!
 {
     Player1, Player2, Player3,Player4,
-    Bullet, Wall, LevelSetup
+    Bullet, Wall
 }
 
 public class MyBehavior : ScriptableObject
@@ -15,7 +15,6 @@ public class MyBehavior : ScriptableObject
     [SerializeField] public MyBehaviorType type;
     [SerializeField] public GameObject prefab;
     public Entity entity;
-
 
     public virtual Entity CreateEntity()
     {

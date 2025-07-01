@@ -85,6 +85,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     {
         score++;
     }
+
     public void GetKilled()
     {
         isAlive = false;

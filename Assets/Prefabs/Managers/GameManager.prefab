@@ -50,3 +50,35 @@ MonoBehaviour:
   - {fileID: 2315110119768141652, guid: c6178edcc3e3b1c4a82584c2942ba72a, type: 3}
   - {fileID: 2796237724839472805, guid: 76c1b343ad0abb44ebf581bcbacedcf4, type: 3}
   - {fileID: 3702918314655459904, guid: abeb59f721bfd76498a9813d707ba07c, type: 3}
+  levelsToPreload:
+  - m_AssetGUID: 125881e53a06740469e140fb74880688
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 0297aa56f4492a84a8598000ac84aed4
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 46212a5478c74e244a31a3aa57e77011
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
+  levelInfoToPreload:
+  - m_AssetGUID: b75b41125c5166e43a7a1c42ee61f09c
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: bffe3b16975027b4a9ac92802dbe1843
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 4db3a2020a1dc844f8bb6e0c5a89f15c
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1

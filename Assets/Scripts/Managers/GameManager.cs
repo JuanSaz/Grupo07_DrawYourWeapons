@@ -1,7 +1,10 @@
 using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +19,6 @@ public class GameManager : MonoBehaviour
     private List<ICollidable> activeBulletsColls = new List<ICollidable>();
     private List<ICollidable> activeWallsColls = new List<ICollidable>();
 
-
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -26,7 +28,6 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
         StartCoroutine(MyStart());
     }
 
@@ -34,17 +35,15 @@ public class GameManager : MonoBehaviour
     {
         playerAmount = amount;   
     }
-
     public int GetPlayerAmount()
     {
         return playerAmount;
     }
-
     private IEnumerator MyStart()
     {
         yield return null;
+        InstantiatorManager.Instance.PreloadAddressables();
     }
-
     public void SetPlayerCollidable(ICollidable collidable, bool active)
     {
         if(active)
@@ -108,4 +107,5 @@ public class GameManager : MonoBehaviour
             activeBulletsColls[i] = null;
         }
     }
+
 }
