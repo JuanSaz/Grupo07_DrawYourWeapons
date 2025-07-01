@@ -53,8 +53,28 @@ MonoBehaviour:
   - {fileID: 7964253110442519553}
   - {fileID: 743551473466088591}
   - {fileID: 7042441067316998154}
+  playerBehaviorTypes: 
   WinCanvas: {fileID: 0}
   pointsToWin: 3
+  OnRoundRestart:
+    m_PersistentCalls:
+      m_Calls: []
+  levelObstacles:
+  - m_AssetGUID: 4e53fde3aee92b44f848ac3c9a89ff9c
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: e58c137e1c6c0e445b5d5e2022ed0b33
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 3448bba1aef7adb45a84255d82449ac3
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
 --- !u!1 &2394757518027662008
 GameObject:
   m_ObjectHideFlags: 0

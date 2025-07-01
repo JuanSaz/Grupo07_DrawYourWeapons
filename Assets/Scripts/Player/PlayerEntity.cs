@@ -28,6 +28,8 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
 
     public MyCircleCollider MyCircleCollider => circleCollider;
 
+    public MyBoxCollider MyBoxCollider => throw new System.NotImplementedException();
+
     public PlayerEntity() 
     {
     

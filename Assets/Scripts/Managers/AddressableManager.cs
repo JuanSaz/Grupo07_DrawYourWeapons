@@ -9,10 +9,8 @@ public class AddressableManager : MonoBehaviour
 {
     public static AddressableManager Instance { get; private set; }
 
-
     void Awake()
     {
-        //SINGLETON
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -24,21 +22,6 @@ public class AddressableManager : MonoBehaviour
 
     public void LoadAsset(AssetReference reference)
     {
-        //NADIE SABE ESTO GENTE
+        
     }
-
-    //public IEnumerator <GameObject> InstantiateAsset(AssetReference assetReference)
-    //{
-    //   AsyncOperationHandle<GameObject> opHandle = assetReference.InstantiateAsync();
-
-    //    //if (!opHandle.IsDone) 
-    //    //{
-            
-            
-    //    //}
-    //    //return opHandle.Result;
-
-
-
-    //}
 }

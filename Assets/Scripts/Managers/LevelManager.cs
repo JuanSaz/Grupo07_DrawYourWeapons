@@ -2,8 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Events;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
+
 
 [DefaultExecutionOrder(-1)]
 public class LevelManager : MonoBehaviour
@@ -19,6 +24,11 @@ public class LevelManager : MonoBehaviour
     private List<PlayerEntity> activePlayers = new List<PlayerEntity>();
 
     private List<PlayerEntity> totalPlayers = new List<PlayerEntity>();
+
+    private AsyncOperationHandle<GameObject> currentLevelInstanceHandle;
+    [SerializeField] private AssetReference[] levelObstacles;
+    private AssetReference levelToInstantiate;
+    private GameObject currentLevelReference;
 
     public List<PlayerEntity> ActivePlayers { get { return activePlayers; } set { activePlayers = value; } }
     public List<PlayerEntity> TotalPlayers { get { return totalPlayers; } set { totalPlayers = value; } }
@@ -43,6 +53,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator MyStart()
     {
         yield return null;
+        SpawnLevel();
         SpawnPlayers();
         onPlayerKilled += ManagePlayerKilled;
     }
@@ -64,10 +75,49 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void SpawnLevel()
+    {
+        PreloadLevel();
+    }
+
+    private void PreloadLevel()
+    {
+        if (currentLevelInstanceHandle.IsValid())
+        {
+            UnloadLevel();
+        }
+
+        int randomIndex = UnityEngine.Random.Range(0, levelObstacles.Length);
+        levelToInstantiate = levelObstacles[randomIndex];
+
+        currentLevelInstanceHandle = levelToInstantiate.InstantiateAsync();
+        currentLevelInstanceHandle.Completed += OnLevelInstantiatedCompleted;
+    }
+
+    private void OnLevelInstantiatedCompleted(AsyncOperationHandle<GameObject> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            Debug.Log("Nivel instanciado correctamente.");
+        }
+        else
+        {
+            Debug.LogError("La instancia del nivel ha fallado.");
+        }
+    }
+
+
+    private void UnloadLevel()
+    {
+        if (currentLevelInstanceHandle.IsValid())
+        {
+            Addressables.ReleaseInstance(currentLevelInstanceHandle);
+            currentLevelInstanceHandle = default;
+        }
+    }
+
     public void SetWinner(PlayerEntity Winner)
     {
-        //Debug.Log("El ganador es " + Winner.PlayerName.ToUpper() + "!");
-
         UnsubscribeAllObjects();
         
         WinInfo info = WinCanvas.GetComponent<WinInfo>();
@@ -103,10 +153,9 @@ public class LevelManager : MonoBehaviour
     {
 
         yield return new WaitForSeconds(delay);
-
+        SpawnLevel();
         OnRoundRestart.Invoke();
     }
-
 
     public void UnsubscribeAllObjects()
     {

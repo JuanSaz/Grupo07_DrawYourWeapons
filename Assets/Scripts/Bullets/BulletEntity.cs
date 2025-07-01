@@ -20,6 +20,8 @@ public class BulletEntity : Entity ,IUpdatable, IFixUpdatable, ICollidable
 
     public PlayerEntity ImmunePlayer { get => immunePlayer; set => immunePlayer = value; }
 
+    public MyBoxCollider MyBoxCollider => throw new NotImplementedException();
+
     public BulletEntity()
     {
         

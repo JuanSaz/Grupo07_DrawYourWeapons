@@ -40,4 +40,12 @@ public class InstantiatorManager : MonoBehaviour
     {
         return go.GetComponent<T>();
     }
+
+    public Entity CreateAddressable(MyBehaviorType behaviorType)
+    {
+        behaviorDictionary.TryGetValue(behaviorType, out MyBehavior myBehavior);
+        Entity newEntity = myBehavior.CreateEntity();
+        newEntity.EntityGameObject = Instantiate(myBehavior.prefab);
+        return newEntity;
+    }
 }
