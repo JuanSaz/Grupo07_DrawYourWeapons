@@ -17,6 +17,7 @@ public class InstantiatorManager : MonoBehaviour
     public BulletPool bulletPool;
     public FlashPool flashPool;
     public WallPool wallPool;
+    public DrawSegmentsPool DrawSegmentsPool;
 
     void Awake()
     {
@@ -63,5 +64,6 @@ public class InstantiatorManager : MonoBehaviour
         bulletPool = new BulletPool(MyBehaviorType.Bullet);
         flashPool = new FlashPool(MyBehaviorType.Flash);
         wallPool = new WallPool(MyBehaviorType.Wall);
+        DrawSegmentsPool = new DrawSegmentsPool(MyBehaviorType.DrawSegment);
     }
 }

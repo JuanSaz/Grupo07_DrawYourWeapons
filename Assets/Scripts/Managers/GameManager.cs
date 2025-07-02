@@ -1,25 +1,27 @@
-using NUnit.Framework;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
     public string currentScene;
     public static GameManager Instance { get; private set; }
-    public List<ICollidable> ActivePlayersColls { get => activePlayersColls;}
-    public List<ICollidable> ActiveBulletsColls { get => activeBulletsColls;}
-    public List<ICollidable> ActiveWallsColls { get => activeWallsColls;}
+    public List<ICollidable> ActivePlayersColls { get => activePlayersColls; }
+    public List<ICollidable> ActiveBulletsColls { get => activeBulletsColls; }
+    public List<ICollidable> ActiveWallsColls { get => activeWallsColls; }
+    public List<ICollidable> ActivePowerUpColls { get => activePowerUpColls; }
+
+    public List<ICollidable> ActiveDrawSegments { get => activeDrawSegments; }
 
     [SerializeField] private int playerAmount;
     public List<GameObject> playerPrefabs = new List<GameObject>();
     private List<ICollidable> activePlayersColls = new List<ICollidable>();
     private List<ICollidable> activeBulletsColls = new List<ICollidable>();
     private List<ICollidable> activeWallsColls = new List<ICollidable>();
+    private List<ICollidable> activeDrawSegments = new List<ICollidable>();
+    private List<ICollidable> activePowerUpColls = new List<ICollidable>();
 
     void Awake()
     {
@@ -37,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayerAmount(int amount)
     {
-        playerAmount = amount;   
+        playerAmount = amount;
     }
     public int GetPlayerAmount()
     {
@@ -50,7 +52,7 @@ public class GameManager : MonoBehaviour
     }
     public void SetPlayerCollidable(ICollidable collidable, bool active)
     {
-        if(active)
+        if (active)
         {
             activePlayersColls.Add(collidable);
         }
@@ -80,6 +82,23 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void SetPowerUpCollidable(ICollidable collidable, bool active)
+    {
+        if (active)
+        {
+            activePowerUpColls.Add(collidable);
+        }
+        else
+        {
+            int index = activePowerUpColls.IndexOf(collidable);
+
+            if (index >= 0)
+            {
+                activePowerUpColls[index] = null;
+            }
+        }
+    }
     public void SetWallCollidable(ICollidable collidable, bool active)
     {
         if (active)
@@ -96,6 +115,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
     public void DeactivateAllCollisions()//AGREGAR A LOS DRAWINGS
     {
         for (int i = 0; i < activeBulletsColls.Count; i++)
@@ -109,6 +129,31 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < activeWallsColls.Count; i++)
         {
             activeWallsColls[i] = null;
+        }
+        for (int i = 0; i < activeDrawSegments.Count; i++)
+        {
+            activeDrawSegments[i] = null;
+        }
+        for (int i = 0; i < activePowerUpColls.Count; i++)
+        {
+            activePowerUpColls[i] = null;
+        }
+    }
+    
+    public void SetDrawingCollidable(ICollidable collidable, bool active)
+    {
+        if (active)
+        {
+            activeDrawSegments.Add(collidable);
+        }
+        else
+        {
+            int index = activeDrawSegments.IndexOf(collidable);
+
+            if (index >= 0)
+            {
+                activeDrawSegments[index] = null;
+            }
         }
     }
 

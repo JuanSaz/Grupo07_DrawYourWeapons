@@ -47,6 +47,7 @@ public class UpdateManager : MonoBehaviour
         GameManager.Instance.ActivePlayersColls.RemoveAll(obj => obj == null);
         GameManager.Instance.ActiveBulletsColls.RemoveAll(obj => obj == null);
         GameManager.Instance.ActiveWallsColls.RemoveAll(obj => obj == null);
+        GameManager.Instance.ActiveDrawSegments.RemoveAll(obj => obj == null);
     }
     public void Subscribe(IUpdatable obj)
     {

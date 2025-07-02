@@ -36,6 +36,10 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public MyCircleCollider MyCircleCollider => circleCollider;
     public MyBoxCollider MyBoxCollidier => null;
 
+    private bool hasPencilPowerup = false;
+    private PencilEntity currentPencil = null;
+
+
     public PlayerEntity() 
     {
     
@@ -79,6 +83,14 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public void FixUpdateMe()
     {
         Physics();
+
+        if (hasPencilPowerup && (Input.GetAxisRaw(inputs.horizontal) != 0 || Input.GetAxisRaw(inputs.vertical) != 0))
+        {
+            DrawingEntity segment = InstantiatorManager.Instance.DrawSegmentsPool.pool.Get();
+            segment.SetOwner(this);
+            segment.EntityGameObject.transform.position = EntityGameObject.transform.position;
+        }
+
     }
     private void Movement()
     {
@@ -99,6 +111,24 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         shotTimer = timeBetweenShots;
     }
 
+    public void ActivatePencilPowerup()
+    {
+        if (hasPencilPowerup) return;
+
+        currentPencil = new PencilEntity();
+        currentPencil.WakeUp();
+        currentPencil.StartPowerup(this);
+    }
+
+    public void SetPencilPowerup(bool active)
+    {
+        hasPencilPowerup = active;
+    }
+
+    public void OnPencilFinished()
+    {
+        currentPencil = null;
+    }
     public void AddPoint()
     {
         score++;
@@ -145,11 +175,16 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
             UpdateManager.Instance.FixSubscribe(this);//pone en fixupdate
             GameManager.Instance.SetPlayerCollidable(this, true);//pone en colisiones
             LevelManager.Instance.ActivePlayers.Add(this);
+            hasPencilPowerup = false;
         }
-
         else
         {
             EntityGameObject.transform.SetPositionAndRotation(startPos, startRot);
+        }
+
+        if (currentPencil != null)
+        {
+            currentPencil.StopPowerup();
         }
 
     }
@@ -171,6 +206,27 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
                 MyCircleCollider.SolveWithStaticBox(GameManager.Instance.ActiveWallsColls[i].MyBoxCollidier);
             }
         }
+
+        for (int i = 0; i < GameManager.Instance.ActiveDrawSegments.Count; i++)
+        {
+            DrawingEntity draw = GameManager.Instance.ActiveDrawSegments[i] as DrawingEntity;
+            if (GameManager.Instance.ActiveDrawSegments[i] == null || draw.playerOwner == this) continue;
+            if (MyCircleCollider.IsCircleCollidingCircle(GameManager.Instance.ActiveDrawSegments[i].MyCircleCollider))//Si esta colisionando con otro player
+            {
+                circleCollider.SolveCircleCollidingStaticCircle(GameManager.Instance.ActiveDrawSegments[i].MyCircleCollider);//Mueve solo a este player
+            }
+        }
+
+        for (int i = GameManager.Instance.ActivePowerUpColls.Count - 1; i >= 0; i--)
+        {
+            if (GameManager.Instance.ActivePowerUpColls[i] is PencilEntity powerUp)
+            {
+                if (MyCircleCollider.IsCircleCollidingCircle(powerUp.MyCircleCollider))
+                {
+                    powerUp.OnPickedUp(this);
+                    GameManager.Instance.ActivePowerUpColls.RemoveAt(i);
+                }
+            }
+        }
     }
-   
 }

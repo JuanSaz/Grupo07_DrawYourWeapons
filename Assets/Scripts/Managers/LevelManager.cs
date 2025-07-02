@@ -1,11 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.U2D;
 
 [DefaultExecutionOrder(-1)]
 public class LevelManager : MonoBehaviour
@@ -15,6 +12,9 @@ public class LevelManager : MonoBehaviour
     public List<MyBehaviorType> playerBehaviorTypes = new List<MyBehaviorType>();
 
     [SerializeField] private GameObject WinCanvas;
+
+    private Vector2 screenBounds = new Vector2(8, 5);
+    private List<PencilEntity> activePowerUps = new List<PencilEntity>(3);
 
     public Action<PlayerEntity> onPlayerKilled;
     private List<PlayerEntity> activePlayers = new List<PlayerEntity>();
@@ -41,11 +41,48 @@ public class LevelManager : MonoBehaviour
             return;
         }
         Instance = this;
-
-       
-
         StartCoroutine(MyStart());
+    }
 
+    public void InstantiatePowerUps()
+    {
+        ClearPowerUps();
+
+        // Random 1-3 powerups
+        int powerUpCount = UnityEngine.Random.Range(1, 4);
+
+        for (int i = 0; i < powerUpCount; i++)
+        {
+            float x = UnityEngine.Random.Range(-screenBounds.x, screenBounds.x);
+            float y = UnityEngine.Random.Range(-screenBounds.y, screenBounds.y);
+            Vector3 spawnPosition = new Vector3(x, y, 0f);
+
+            if(spawnPosition == spawnPoints[i].position)
+            {
+                continue;
+            }
+
+            PencilEntity powerUp = (PencilEntity)InstantiatorManager.Instance.Create(MyBehaviorType.PencilPowerUp);
+
+            powerUp.EntityGameObject.transform.position = spawnPosition;
+            powerUp.WakeUp();
+
+            activePowerUps.Add(powerUp);
+        }
+    }
+
+    private void ClearPowerUps()
+    {
+        for (int i = 0; i < activePowerUps.Count; i++)
+        {
+            if (activePowerUps[i] != null && activePowerUps[i].EntityGameObject != null)
+            {
+                activePowerUps[i].EntityGameObject.SetActive(false);
+                GameManager.Instance.SetPowerUpCollidable(activePowerUps[i], false);
+
+            }
+        }
+        activePowerUps.Clear();
     }
     private IEnumerator MyStart()
     {
@@ -56,6 +93,7 @@ public class LevelManager : MonoBehaviour
         SelectRandomMap();
         InstantiateWalls();
         InstatiateLevelBorders();
+        InstantiatePowerUps();
     }
 
     public void SpawnPlayers()
@@ -127,7 +165,7 @@ public class LevelManager : MonoBehaviour
             if (activePlayers[0].Score == pointsToWin)
             {
                 SetWinner(activePlayers[0]);
-                yield break; // termina la corutina acá
+                yield break; // termina la corutina acï¿½
             }
         }
         
@@ -135,6 +173,7 @@ public class LevelManager : MonoBehaviour
         UnloadWalls();
         SelectRandomMap();
         InstantiateWalls();
+        InstantiatePowerUps();
         OnRoundRestart.Invoke();
     }
     public void UnsubscribeAllObjects()
