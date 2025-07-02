@@ -13,11 +13,6 @@ public class FlashPool
         pool = new ObjectPool<FlashEntity>(CreatePoolItem, OnTakeFromPool, OnReturnedFromPool, OnDestroyPoolObject, false, 8, 40);
     }
 
-    private void OnDestroyPoolObject(FlashEntity flash)
-    {
-        //Destroy(bullet.gameObject);
-    }
-
     private void OnReturnedFromPool(FlashEntity flash)
     {
         flash.EntityGameObject.SetActive(false);
@@ -36,5 +31,10 @@ public class FlashPool
         flash.WakeUp();
         flash.EntityGameObject.SetActive(false);
         return flash;
+    }
+
+    private void OnDestroyPoolObject(FlashEntity flash)
+    {
+
     }
 }
