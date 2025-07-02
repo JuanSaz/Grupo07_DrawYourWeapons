@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,6 +32,7 @@ public class LevelManager : MonoBehaviour
     public UnityEvent OnRoundRestart = new UnityEvent();
     private LevelInfoSO currentLevelInfo;
     [SerializeField] private LevelInfoSO levelBordersInfo;
+    [SerializeField] private PowerUpPositionsSO powerUpPositions;
     private int previousRandomIndex = -1;
 
     void Awake()
@@ -48,28 +50,31 @@ public class LevelManager : MonoBehaviour
     {
         ClearPowerUps();
 
-        // Random 1-3 powerups
-        int powerUpCount = UnityEngine.Random.Range(1, 4);
+        int availablePositions = powerUpPositions.positions.Length;
+        if (availablePositions == 0)
+        {
+            return;
+        }
+
+        int powerUpCount = Mathf.Clamp(UnityEngine.Random.Range(1, 4), 1, availablePositions);
+
+        List<int> indices = Enumerable.Range(0, availablePositions).ToList();
+        indices = indices.OrderBy(i => UnityEngine.Random.value).ToList();
 
         for (int i = 0; i < powerUpCount; i++)
         {
-            float x = UnityEngine.Random.Range(-screenBounds.x, screenBounds.x);
-            float y = UnityEngine.Random.Range(-screenBounds.y, screenBounds.y);
-            Vector3 spawnPosition = new Vector3(x, y, 0f);
-
-            if(spawnPosition == spawnPoints[i].position)
-            {
-                continue;
-            }
+            int randomIndex = indices[i];
+            Vector2 spawnPosition2D = powerUpPositions.positions[randomIndex];
+            Vector3 spawnPosition = new Vector3(spawnPosition2D.x, spawnPosition2D.y, 0f);
 
             PencilEntity powerUp = (PencilEntity)InstantiatorManager.Instance.Create(MyBehaviorType.PencilPowerUp);
-
             powerUp.EntityGameObject.transform.position = spawnPosition;
             powerUp.WakeUp();
 
             activePowerUps.Add(powerUp);
         }
     }
+
 
     private void ClearPowerUps()
     {
