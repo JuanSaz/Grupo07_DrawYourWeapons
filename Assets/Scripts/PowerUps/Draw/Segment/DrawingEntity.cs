@@ -36,8 +36,6 @@ public class DrawingEntity : Entity, ICollidable, IUpdatable
     {
         currentTime += Time.deltaTime;
 
-        Debug.Log(deltaTime);
-
         if (currentTime >= lifeTime)
         {
             DeactivateSegment();

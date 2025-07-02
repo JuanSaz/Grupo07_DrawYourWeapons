@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +24,15 @@ public class PencilEntity : Entity, ICollidable, IUpdatable
         {
             MyCircleCollider = new MyCircleCollider(EntityGameObject.transform.localScale.x, EntityGameObject);
 
+            GameManager.Instance.StartCoroutine(setCollidableOn());
+        }
+    }
+
+    private IEnumerator setCollidableOn()
+    {
+        yield return new WaitForSeconds(1f);
+        if (EntityGameObject != null)
+        {
             GameManager.Instance.SetPowerUpCollidable(this, true);
         }
     }

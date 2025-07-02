@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
 
             if (index >= 0)
             {
+                Debug.Log(collidable.CollidableEntity.EntityGameObject.name);
                 activePowerUpColls[index] = null;
             }
         }

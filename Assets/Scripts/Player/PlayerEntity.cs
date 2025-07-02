@@ -53,7 +53,6 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         UpdateManager.Instance.FixSubscribe(this);
         GameManager.Instance.SetPlayerCollidable(this,true);
 
-        hasPencilPowerup = false;
         startPos = EntityGameObject.transform.position;
         startRot = EntityGameObject.transform.rotation;
     }
@@ -69,9 +68,9 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     {
         Physics();
 
-        if (hasPencilPowerup)
+        if (hasPencilPowerup && (Input.GetAxisRaw(inputs.horizontal) != 0 || Input.GetAxisRaw(inputs.vertical) != 0))
         {
-
+            Debug.Log("Drawing segment");
             DrawingEntity segment = InstantiatorManager.Instance.DrawSegmentsPool.pool.Get();
             segment.SetOwner(this);
             segment.EntityGameObject.transform.position = EntityGameObject.transform.position;
@@ -139,12 +138,13 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
             UpdateManager.Instance.FixSubscribe(this);//pone en fixupdate
             GameManager.Instance.SetPlayerCollidable(this, true);//pone en colisiones
             LevelManager.Instance.ActivePlayers.Add(this);
+            hasPencilPowerup = false;
         }
-
         else
         {
             EntityGameObject.transform.SetPositionAndRotation(startPos, startRot);
         }
+
         if (currentPencil != null)
         {
             currentPencil.StopPowerup();

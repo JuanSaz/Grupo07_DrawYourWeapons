@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.U2D;
 
 [DefaultExecutionOrder(-1)]
 public class LevelManager : MonoBehaviour
@@ -15,7 +13,7 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private GameObject WinCanvas;
 
-    private Vector2 screenBounds = new Vector2(10, 6);
+    private Vector2 screenBounds = new Vector2(8, 5);
     private List<PencilEntity> activePowerUps = new List<PencilEntity>(3);
 
     public Action<PlayerEntity> onPlayerKilled;
@@ -59,9 +57,12 @@ public class LevelManager : MonoBehaviour
             float y = UnityEngine.Random.Range(-screenBounds.y, screenBounds.y);
             Vector3 spawnPosition = new Vector3(x, y, 0f);
 
-            PencilEntity powerUp = (PencilEntity)InstantiatorManager.Instance.Create(MyBehaviorType.PencilPowerUp);
+            if(spawnPosition == spawnPoints[i].position)
+            {
+                continue;
+            }
 
-            if (powerUp == null) Debug.Log("asda");
+            PencilEntity powerUp = (PencilEntity)InstantiatorManager.Instance.Create(MyBehaviorType.PencilPowerUp);
 
             powerUp.EntityGameObject.transform.position = spawnPosition;
             powerUp.WakeUp();
@@ -77,6 +78,8 @@ public class LevelManager : MonoBehaviour
             if (activePowerUps[i] != null && activePowerUps[i].EntityGameObject != null)
             {
                 activePowerUps[i].EntityGameObject.SetActive(false);
+                GameManager.Instance.SetPowerUpCollidable(activePowerUps[i], false);
+
             }
         }
         activePowerUps.Clear();
