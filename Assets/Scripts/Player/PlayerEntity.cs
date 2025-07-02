@@ -77,7 +77,9 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     private void Shoot()
     {
         BulletEntity bullet = InstantiatorManager.Instance.bulletPool.pool.Get();
+        FlashEntity flash = InstantiatorManager.Instance.flashPool.pool.Get();
         bullet.EntityGameObject.transform.SetPositionAndRotation(EntityGameObject.transform.position, EntityGameObject.transform.rotation);
+        flash.EntityGameObject.transform.SetPositionAndRotation(EntityGameObject.transform.position, EntityGameObject.transform.rotation);
         bullet.dir = EntityGameObject.transform.up.normalized;
         bullet.ImmunePlayer = this;
     }

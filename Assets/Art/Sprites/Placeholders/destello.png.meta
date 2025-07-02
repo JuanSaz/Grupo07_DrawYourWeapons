@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 54872c71ecfd56344b0619f9d316ea81
+guid: 5a35e308945937e4b831e37a10857b99
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3262554347240971342
-    second: WinBackground_0
+      213: -6592936598429424345
+    second: destello_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WinBackground_0
+      name: destello_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1920
-        height: 1080
+        x: 30
+        y: 30
+        width: 300
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2b3ab406b1419b2d0800000000000000
-      internalID: -3262554347240971342
+      spriteID: 72521f7381f2184a0800000000000000
+      internalID: -6592936598429424345
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      WinBackground_0: -3262554347240971342
+      destello_0: -6592936598429424345
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
