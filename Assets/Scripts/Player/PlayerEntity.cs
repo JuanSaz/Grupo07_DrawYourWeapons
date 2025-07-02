@@ -14,6 +14,9 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     private Vector2 dir = new Vector2(0,1);
     private float movementSpeed = 3.0f;
     private float rotationSpeed = 180f;
+    private float timeBetweenShots = 0.85f;
+    private float shotTimer = 0f;
+
 
     private Vector3 startPos;
     private Quaternion startRot;
@@ -57,9 +60,20 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public void UpdateMe(float deltaTime)
     {
         Movement();
+        if (shotTimer > 0)
+        {
+            shotTimer -= Time.deltaTime;
+            if (shotTimer <= 0)
+            {
+                shotTimer = 0;
+            }
+        }
         if (Input.GetButtonDown(inputs.shoot))
         {
-            Shoot();
+            if(shotTimer <= 0)
+            {
+                Shoot();
+            }
         }
     }
     public void FixUpdateMe()
@@ -80,6 +94,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         bullet.EntityGameObject.transform.SetPositionAndRotation(EntityGameObject.transform.position, EntityGameObject.transform.rotation);
         bullet.dir = EntityGameObject.transform.up.normalized;
         bullet.ImmunePlayer = this;
+        shotTimer = timeBetweenShots;
     }
 
     public void AddPoint()
@@ -120,6 +135,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         if (isAlive == false)
         {
             isAlive = true;
+            shotTimer = 0;
             EntityGameObject.gameObject.SetActive(true);
             EntityGameObject.transform.position = startPos;
             EntityGameObject.transform.rotation = startRot;
