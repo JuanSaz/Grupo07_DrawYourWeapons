@@ -15,6 +15,7 @@ public class InstantiatorManager : MonoBehaviour
     private int assetsPreloadedAmount;
 
     public BulletPool bulletPool;
+    public FlashPool flashPool;
     public WallPool wallPool;
 
     void Awake()
@@ -60,6 +61,7 @@ public class InstantiatorManager : MonoBehaviour
     public void CreatePools()
     {
         bulletPool = new BulletPool(MyBehaviorType.Bullet);
+        flashPool = new FlashPool(MyBehaviorType.Flash);
         wallPool = new WallPool(MyBehaviorType.Wall);
     }
 }
