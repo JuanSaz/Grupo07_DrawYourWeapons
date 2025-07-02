@@ -17,6 +17,9 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     private float timeBetweenShots = 0.85f;
     private float shotTimer = 0f;
 
+    private float flashOffset = 0.5f;
+    private float drawingOffset = 0.75f;
+
 
     private Vector3 startPos;
     private Quaternion startRot;
@@ -88,7 +91,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         {
             DrawingEntity segment = InstantiatorManager.Instance.DrawSegmentsPool.pool.Get();
             segment.SetOwner(this);
-            segment.EntityGameObject.transform.position = EntityGameObject.transform.position;
+            segment.EntityGameObject.transform.position = EntityGameObject.transform.position + (-EntityGameObject.transform.up * drawingOffset);
         }
 
     }
@@ -105,7 +108,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         BulletEntity bullet = InstantiatorManager.Instance.bulletPool.pool.Get();
         FlashEntity flash = InstantiatorManager.Instance.flashPool.pool.Get();
         bullet.EntityGameObject.transform.SetPositionAndRotation(EntityGameObject.transform.position, EntityGameObject.transform.rotation);
-        flash.EntityGameObject.transform.SetPositionAndRotation(EntityGameObject.transform.position, EntityGameObject.transform.rotation);
+        flash.EntityGameObject.transform.SetPositionAndRotation(EntityGameObject.transform.position + (EntityGameObject.transform.up * flashOffset), EntityGameObject.transform.rotation);
         bullet.dir = EntityGameObject.transform.up.normalized;
         bullet.ImmunePlayer = this;
         shotTimer = timeBetweenShots;
