@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
-using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.VisualScripting.FullSerializer.Internal;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Rendering;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public enum E_UIScreens
@@ -167,10 +163,6 @@ public class UIManager : MonoBehaviour
 
     private void SelectPlayer(int playerAmount)
     {   
-        for (int i = 0;i < buttonsComponent.Length; i++)
-        {
-            buttonsComponent[i].onClick.RemoveAllListeners();
-        }
         GameManager.Instance.SetPlayerAmount(playerAmount);
         SceneChanger.Instance.LoadScene("Testing");
     }
