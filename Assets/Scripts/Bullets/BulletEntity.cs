@@ -69,6 +69,7 @@ public class BulletEntity : Entity ,IUpdatable, IFixUpdatable, ICollidable
 
         for (int i = 0; i < GameManager.Instance.ActiveWallsColls.Count; i++)
         {
+            if (GameManager.Instance.ActiveWallsColls[i] == null) continue;
             if (MyCircleCollider.IsBoxCollidingCircle(GameManager.Instance.ActiveWallsColls[i].MyBoxCollidier))//Si esta colisionando con un player
             {
                 dir = MyCircleCollider.ProjectCircleOntoLine(GameManager.Instance.ActiveWallsColls[i].MyBoxCollidier, dir);

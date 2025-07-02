@@ -31,8 +31,6 @@ public class InstantiatorManager : MonoBehaviour
         {
             behaviorDictionary.Add(behavior.type, behavior);
         }
-        bulletPool = new BulletPool(MyBehaviorType.Bullet);
-        wallPool = new WallPool(MyBehaviorType.Wall);
     }
 
     public Entity Create(MyBehaviorType behaviorType)
@@ -57,5 +55,11 @@ public class InstantiatorManager : MonoBehaviour
         {
             AsyncOperationHandle handle = assetReference.LoadAssetAsync<ScriptableObject>();
         }
+    }
+
+    public void CreatePools()
+    {
+        bulletPool = new BulletPool(MyBehaviorType.Bullet);
+        wallPool = new WallPool(MyBehaviorType.Wall);
     }
 }

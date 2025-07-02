@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator MyStart()
     {
         yield return null;
+        InstantiatorManager.Instance.CreatePools();//Crea los pools
         SpawnPlayers();
         onPlayerKilled += ManagePlayerKilled;
         SelectRandomMap();
@@ -134,6 +135,8 @@ public class LevelManager : MonoBehaviour
     public void UnsubscribeAllObjects()
     {
         UpdateManager.Instance.UnsubscribeAll();
+        UpdateManager.Instance.FixUnsubscribeAll();
+        GameManager.Instance.DeactivateAllCollisions();
         activePlayers.Clear();
     }
     public void SelectRandomMap()

@@ -96,7 +96,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void DeactivateAllCollisions()
+    public void DeactivateAllCollisions()//AGREGAR A LOS DRAWINGS
     {
         for (int i = 0; i < activeBulletsColls.Count; i++)
         {
@@ -104,11 +104,11 @@ public class GameManager : MonoBehaviour
         }
         for (int i = 0; i < activePlayersColls.Count; i++)
         {
-            activeBulletsColls[i] = null;
+            activePlayersColls[i] = null;
         }
         for (int i = 0; i < activeWallsColls.Count; i++)
         {
-            activeBulletsColls[i] = null;
+            activeWallsColls[i] = null;
         }
     }
 
