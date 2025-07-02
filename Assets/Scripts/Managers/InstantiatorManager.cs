@@ -51,8 +51,6 @@ public class InstantiatorManager : MonoBehaviour
 
     public void PreloadAddressables()
     {
-        assetsPreloadedAmount = 0;      //Empieza el contador en cero
-
         foreach (AssetReference assetReference in objectsToPreload)
         {
             AsyncOperationHandle handle = assetReference.LoadAssetAsync<ScriptableObject>();

@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
+
     public void DeactivateAllCollisions()//AGREGAR A LOS DRAWINGS
     {
         for (int i = 0; i < activeBulletsColls.Count; i++)
@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
             activePowerUpColls[i] = null;
         }
     }
-    
+
     public void SetDrawingCollidable(ICollidable collidable, bool active)
     {
         if (active)
@@ -157,4 +157,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void LoadScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+        GameManager.Instance.currentScene = sceneName;
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
+    }
 }

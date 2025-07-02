@@ -164,7 +164,7 @@ public class UIManager : MonoBehaviour
     private void SelectPlayer(int playerAmount)
     {   
         GameManager.Instance.SetPlayerAmount(playerAmount);
-        SceneChanger.Instance.LoadScene("Testing");
+        GameManager.Instance.LoadScene("Testing");
     }
 
     private void AddPointToHUD(PlayerEntity player)
@@ -200,7 +200,7 @@ public class UIManager : MonoBehaviour
 
     public void ExitGame()
     {
-        SceneChanger.Instance.QuitGame();
+        GameManager.Instance.QuitGame();
     }
 
     private void ChangeUIScreen(E_UIScreens newScreen)
