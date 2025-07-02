@@ -213,7 +213,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         for (int i = 0; i < GameManager.Instance.ActiveDrawSegments.Count; i++)
         {
             DrawingEntity draw = GameManager.Instance.ActiveDrawSegments[i] as DrawingEntity;
-            if (GameManager.Instance.ActiveDrawSegments[i] == null || draw.playerOwner == this) continue;
+            if (GameManager.Instance.ActiveDrawSegments[i] == null) continue;
             if (MyCircleCollider.IsCircleCollidingCircle(GameManager.Instance.ActiveDrawSegments[i].MyCircleCollider))//Si esta colisionando con otro player
             {
                 circleCollider.SolveCircleCollidingStaticCircle(GameManager.Instance.ActiveDrawSegments[i].MyCircleCollider);//Mueve solo a este player

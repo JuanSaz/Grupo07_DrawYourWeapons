@@ -12,7 +12,7 @@ public class DrawingEntity : Entity, ICollidable, IUpdatable
     private MyBoxCollider boxCollider;
 
     public PlayerEntity playerOwner;
-    float radius => EntityGameObject.transform.localScale.x;
+    float radius = 0.1f;
 
     float lifeTime;
     float currentTime;
