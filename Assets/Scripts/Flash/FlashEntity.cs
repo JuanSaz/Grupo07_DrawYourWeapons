@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FlashEntity: Entity, IUpdatable
 {
-    private float lifeSpan = 0.2f;
+    private float lifeSpan = 0.15f;
     private float timer = 0f;
 
     public override void WakeUp()
