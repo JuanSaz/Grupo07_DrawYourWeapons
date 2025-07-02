@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.U2D;
@@ -92,22 +93,13 @@ public class LevelManager : MonoBehaviour
 
         if (activePlayers.Count == 1)
         {
-            activePlayers[0].AddPoint();
-            UIManager.Instance.onScoreChanged.Invoke(activePlayers[0]);
             ManageRoundRestart(activePlayers[0]);
         }
     }
 
     public void ManageRoundRestart(PlayerEntity survivour)
     {
-        if (survivour.Score == pointsToWin)
-        {
-            SetWinner(survivour);
-        }
-        else
-        {
-            RestartRoundCor = StartCoroutine(RestartRoundAfterDelay(2f));
-        }
+        RestartRoundCor = StartCoroutine(RestartRoundAfterDelay(2f));
     }
 
     private void InstatiateLevelBorders()
@@ -127,6 +119,19 @@ public class LevelManager : MonoBehaviour
     {
 
         yield return new WaitForSeconds(delay);
+        if(activePlayers.Count == 1)
+        {
+            activePlayers[0].AddPoint();//Recien le da el punto si sobrevive
+            UIManager.Instance.onScoreChanged.Invoke(activePlayers[0]);
+
+            if (activePlayers[0].Score == pointsToWin)
+            {
+                SetWinner(activePlayers[0]);
+                yield break; // termina la corutina acá
+            }
+        }
+        
+
         UnloadWalls();
         SelectRandomMap();
         InstantiateWalls();
