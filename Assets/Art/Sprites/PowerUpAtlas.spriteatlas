@@ -33,15 +33,19 @@ SpriteAtlas:
     variantMultiplier: 1
     packables:
     - {fileID: 4677890805844617162, guid: 7df3cc8ae34a1e24cad52506c3d7b79a, type: 3}
+    - {fileID: 21300000, guid: 62bb1f2a7d2cef846bc4945c0fcde1e4, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
     packedSpriteRenderDataKeys:
+    - 62bb1f2a7d2cef846bc4945c0fcde1e4: 21300000
     - 7df3cc8ae34a1e24cad52506c3d7b79a: 4677890805844617162
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 62bb1f2a7d2cef846bc4945c0fcde1e4, type: 3}
   - {fileID: 4677890805844617162, guid: 7df3cc8ae34a1e24cad52506c3d7b79a, type: 3}
   m_PackedSpriteNamesToIndex:
+  - DrawPoint
   - Lapiz 1_0
   m_RenderDataMap: {}
   m_Tag: PowerUpAtlas
