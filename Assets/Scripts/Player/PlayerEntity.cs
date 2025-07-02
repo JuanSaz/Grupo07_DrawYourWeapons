@@ -82,6 +82,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
                 Shoot();
             }
         }
+        
     }
     public void FixUpdateMe()
     {

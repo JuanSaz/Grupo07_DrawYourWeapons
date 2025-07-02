@@ -84,6 +84,7 @@ public class BulletEntity : Entity ,IUpdatable, IFixUpdatable, ICollidable
             if (MyCircleCollider.IsCircleCollidingCircle(GameManager.Instance.ActiveDrawSegments[i].MyCircleCollider))
             {
                dir = circleCollider.SolveDynamicCircleWithStaticCircle(GameManager.Instance.ActiveDrawSegments[i].MyCircleCollider, dir);
+               immunePlayer = null;
             }
         }
 
