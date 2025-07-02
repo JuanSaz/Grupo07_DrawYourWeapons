@@ -1,10 +1,7 @@
-using NUnit.Framework;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -12,12 +9,17 @@ public class GameManager : MonoBehaviour
     public List<ICollidable> ActivePlayersColls { get => activePlayersColls;}
     public List<ICollidable> ActiveBulletsColls { get => activeBulletsColls;}
     public List<ICollidable> ActiveWallsColls { get => activeWallsColls;}
+    public List<ICollidable> ActivePowerUpColls { get => activePowerUpColls; }
+
+    public List<ICollidable> ActiveDrawSegments { get => activeDrawSegments; }
 
     [SerializeField] private int playerAmount;
     public List<GameObject> playerPrefabs = new List<GameObject>();
     private List<ICollidable> activePlayersColls = new List<ICollidable>();
     private List<ICollidable> activeBulletsColls = new List<ICollidable>();
     private List<ICollidable> activeWallsColls = new List<ICollidable>();
+    private List<ICollidable> activeDrawSegments = new List<ICollidable>();
+    private List<ICollidable> activePowerUpColls = new List<ICollidable>();
 
     void Awake()
     {
@@ -76,6 +78,23 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void SetPowerUpCollidable(ICollidable collidable, bool active)
+    {
+        if (active)
+        {
+            activePowerUpColls.Add(collidable);
+        }
+        else
+        {
+            int index = activePowerUpColls.IndexOf(collidable);
+
+            if (index >= 0)
+            {
+                activePowerUpColls[index] = null;
+            }
+        }
+    }
     public void SetWallCollidable(ICollidable collidable, bool active)
     {
         if (active)
@@ -92,6 +111,23 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void SetDrawingCollidable(ICollidable collidable, bool active)
+    {
+        if (active)
+        {
+            activeDrawSegments.Add(collidable);
+        }
+        else
+        {
+            int index = activeDrawSegments.IndexOf(collidable);
+
+            if (index >= 0)
+            {
+                activeDrawSegments[index] = null;
+            }
+        }
+    }
     public void DeactivateAllCollisions()
     {
         for (int i = 0; i < activeBulletsColls.Count; i++)
@@ -100,11 +136,11 @@ public class GameManager : MonoBehaviour
         }
         for (int i = 0; i < activePlayersColls.Count; i++)
         {
-            activeBulletsColls[i] = null;
+            activePlayersColls[i] = null;
         }
         for (int i = 0; i < activeWallsColls.Count; i++)
         {
-            activeBulletsColls[i] = null;
+            activeWallsColls[i] = null;
         }
     }
 

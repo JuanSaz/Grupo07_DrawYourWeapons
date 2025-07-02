@@ -15,6 +15,9 @@ public class LevelManager : MonoBehaviour
 
     [SerializeField] private GameObject WinCanvas;
 
+    private Vector2 screenBounds = new Vector2(10, 6);
+    private List<PencilEntity> activePowerUps = new List<PencilEntity>(3);
+
     public Action<PlayerEntity> onPlayerKilled;
     private List<PlayerEntity> activePlayers = new List<PlayerEntity>();
     private List<PlayerEntity> totalPlayers = new List<PlayerEntity>();
@@ -40,11 +43,43 @@ public class LevelManager : MonoBehaviour
             return;
         }
         Instance = this;
-
-       
-
         StartCoroutine(MyStart());
+    }
 
+    public void InstantiatePowerUps()
+    {
+        ClearPowerUps();
+
+        // Random 1-3 powerups
+        int powerUpCount = UnityEngine.Random.Range(1, 4);
+
+        for (int i = 0; i < powerUpCount; i++)
+        {
+            float x = UnityEngine.Random.Range(-screenBounds.x, screenBounds.x);
+            float y = UnityEngine.Random.Range(-screenBounds.y, screenBounds.y);
+            Vector3 spawnPosition = new Vector3(x, y, 0f);
+
+            PencilEntity powerUp = (PencilEntity)InstantiatorManager.Instance.Create(MyBehaviorType.PencilPowerUp);
+
+            if (powerUp == null) Debug.Log("asda");
+
+            powerUp.EntityGameObject.transform.position = spawnPosition;
+            powerUp.WakeUp();
+
+            activePowerUps.Add(powerUp);
+        }
+    }
+
+    private void ClearPowerUps()
+    {
+        for (int i = 0; i < activePowerUps.Count; i++)
+        {
+            if (activePowerUps[i] != null && activePowerUps[i].EntityGameObject != null)
+            {
+                activePowerUps[i].EntityGameObject.SetActive(false);
+            }
+        }
+        activePowerUps.Clear();
     }
     private IEnumerator MyStart()
     {
@@ -54,6 +89,7 @@ public class LevelManager : MonoBehaviour
         SelectRandomMap();
         InstantiateWalls();
         InstatiateLevelBorders();
+        InstantiatePowerUps();
     }
 
     public void SpawnPlayers()
@@ -127,6 +163,7 @@ public class LevelManager : MonoBehaviour
         UnloadWalls();
         SelectRandomMap();
         InstantiateWalls();
+        InstantiatePowerUps();
         OnRoundRestart.Invoke();
     }
     public void UnsubscribeAllObjects()

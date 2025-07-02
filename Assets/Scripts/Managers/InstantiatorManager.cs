@@ -16,6 +16,7 @@ public class InstantiatorManager : MonoBehaviour
 
     public BulletPool bulletPool;
     public WallPool wallPool;
+    public DrawSegmentsPool DrawSegmentsPool;
 
     void Awake()
     {
@@ -33,6 +34,7 @@ public class InstantiatorManager : MonoBehaviour
         }
         bulletPool = new BulletPool(MyBehaviorType.Bullet);
         wallPool = new WallPool(MyBehaviorType.Wall);
+        DrawSegmentsPool = new DrawSegmentsPool(MyBehaviorType.DrawSegment);
     }
 
     public Entity Create(MyBehaviorType behaviorType)

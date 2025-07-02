@@ -30,15 +30,22 @@ public class MyCircleCollider
 
     public Vector2 SolveDynamicCircleWithStaticCircle(MyCircleCollider otherCircle, Vector2 bulletDir)
     {
-        Vector2 normal = new Vector2(entity.transform.position.x - otherCircle.entity.transform.position.x, entity.transform.position.y - otherCircle.entity.transform.position.y);
+        // Calcular vector del centro del otro círculo hacia este círculo
+        Vector2 normal = new Vector2(entity.transform.position.x - otherCircle.entity.transform.position.x,
+                                    entity.transform.position.y - otherCircle.entity.transform.position.y);
 
-        Vector2 newPosition = ((Vector2)otherCircle.entity.transform.position + (normal * (radius + otherCircle.radius)));
+        // NORMALIZAR el vector (esto es crítico)
+        normal = normal.normalized;
 
+        // Separar los círculos a la distancia correcta
+        Vector2 newPosition = (Vector2)otherCircle.entity.transform.position + (normal * (radius + otherCircle.radius));
         entity.transform.position = newPosition;
 
+        // Calcular reflexión correcta: newDirection = direction - 2 * (direction · normal) * normal
         float dot = Vector2.Dot(bulletDir, normal);
+        Vector2 reflectedDirection = bulletDir - 2 * dot * normal;
 
-        return normal * (dot * 2);
+        return reflectedDirection;
     }
     public void SolveWithStaticBox(MyBoxCollider box)
     {
