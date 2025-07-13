@@ -14,7 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
   m_GUID: b55504e21b59a6645aa2421236d733b6
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 10345f45861ff9d4cb81bd2e33518ba2
+    m_Address: Assets/Scripts/ScriptableObjects/LevelSetups/Level Behaviors/Level5_Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9feeaf9ff6291564aa0bce0b92490f2a
+    m_Address: Assets/Scripts/ScriptableObjects/LevelSetups/Level Behaviors/Level4_Info.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 982643da768994a478b380327e8f4e85, type: 2}
   m_SchemaSet:

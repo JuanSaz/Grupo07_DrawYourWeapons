@@ -169,7 +169,6 @@ public class LevelManager : MonoBehaviour
             }
         }
         
-
         UnloadWalls();
         SelectRandomMap();
         InstantiateWalls();
