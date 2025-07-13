@@ -15,3 +15,4 @@ MonoBehaviour:
   type: 1
   prefab: {fileID: 2315110119768141652, guid: c6178edcc3e3b1c4a82584c2942ba72a, type: 3}
   inputsRef: {fileID: 11400000, guid: 416dfc15ab30c6f46bbd922eae6c5aed, type: 2}
+  shootSoundID: shootSound

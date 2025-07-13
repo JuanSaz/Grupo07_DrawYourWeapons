@@ -35,6 +35,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private PowerUpPositionsSO powerUpPositions;
     private int previousRandomIndex = -1;
 
+    [Header("Audio")]
+    [SerializeField] private string combatTrackID;
+    [SerializeField] private string playerDiedID;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -44,6 +48,8 @@ public class LevelManager : MonoBehaviour
         }
         Instance = this;
         StartCoroutine(MyStart());
+
+        GameManager.Instance.PlayMusic(combatTrackID);
     }
 
     public void InstantiatePowerUps()
@@ -121,13 +127,14 @@ public class LevelManager : MonoBehaviour
     public void SetWinner(PlayerEntity Winner)
     {
         UnsubscribeAllObjects();
-
+        GameManager.Instance.StopMusic();
         UIManager.Instance.onPlayerWon.Invoke(Winner);
     }
 
     private void ManagePlayerKilled(PlayerEntity player)
     {
         activePlayers.Remove(player);
+        GameManager.Instance.PlaySound(playerDiedID);
 
         if (activePlayers.Count == 1)
         {

@@ -13,6 +13,8 @@ public class PencilEntity : Entity, ICollidable, IUpdatable
     private float pencilPowerUpDuration = 3f;
     private float currentTime = 0f;
 
+    //Audio
+    public string pickUpSoundID;
 
     public PencilEntity()
     {
@@ -38,6 +40,7 @@ public class PencilEntity : Entity, ICollidable, IUpdatable
     }
     public void OnPickedUp(PlayerEntity player)
     {
+        GameManager.Instance.PlaySound(pickUpSoundID);
         player.ActivatePencilPowerup();
 
         GameManager.Instance.SetPowerUpCollidable(this, false);

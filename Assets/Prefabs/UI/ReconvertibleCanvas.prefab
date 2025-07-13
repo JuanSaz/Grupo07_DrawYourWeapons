@@ -153,6 +153,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe105a40efe35774bb43ea0cc17c4a4b, type: 2}
   - {fileID: 11400000, guid: 8e14a6ddeee50174a934911c602cfb48, type: 2}
   - {fileID: 11400000, guid: 8e14a6ddeee50174a934911c602cfb48, type: 2}
+  winSoundID: winSound
   onScoreChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -42,6 +42,8 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     private bool hasPencilPowerup = false;
     private PencilEntity currentPencil = null;
 
+    //Audio
+    public string shootSoundID;
 
     public PlayerEntity() 
     {
@@ -79,6 +81,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         {
             if(shotTimer <= 0)
             {
+                GameManager.Instance.PlaySound(shootSoundID);
                 Shoot();
             }
         }

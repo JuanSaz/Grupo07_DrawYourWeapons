@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
+public class Audio
+{
+    public AudioClip audioClip;
+    public string audioID;
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -23,6 +29,17 @@ public class GameManager : MonoBehaviour
     private List<ICollidable> activeDrawSegments = new List<ICollidable>();
     private List<ICollidable> activePowerUpColls = new List<ICollidable>();
 
+    [Header("Music")]
+    [SerializeField] private GameObject music;
+    [SerializeField] private List<Audio> musicList;
+    private AudioSource musicSource;
+
+    [Header("Sounds")]
+    [SerializeField] private GameObject sound;
+    [SerializeField] private List<Audio> soundList;
+    private AudioSource soundSource;
+
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -35,6 +52,9 @@ public class GameManager : MonoBehaviour
         StartCoroutine(MyStart());
 
         currentScene = SceneManager.GetActiveScene().name;
+
+        musicSource = music.GetComponent<AudioSource>();
+        soundSource = sound.GetComponent<AudioSource>();
     }
 
     public void SetPlayerAmount(int amount)
@@ -155,6 +175,54 @@ public class GameManager : MonoBehaviour
                 activeDrawSegments[index] = null;
             }
         }
+    }
+
+    public void PlayMusic(string musicID)
+    {
+        AudioClip musicToPlay = null;
+        foreach (var music in musicList)
+        {
+            if (music.audioID == musicID)
+            {
+                musicToPlay = music.audioClip;
+                break;
+            }
+        }
+        musicSource.clip = musicToPlay;
+
+        if (musicSource.clip != null)
+        {
+            musicSource.Play();
+        }
+    }
+
+    public void StopMusic()
+    {
+        musicSource.Stop();
+        musicSource.clip = null;
+    }
+
+    public void PlaySound(string soundID)
+    {
+        AudioClip soundToPlay = null;
+        foreach (var sound in soundList)
+        {
+            if (sound.audioID == soundID)
+            {
+                soundToPlay = sound.audioClip;
+                break;
+            }
+        }
+
+        if (soundToPlay != null)
+        {
+            soundSource.PlayOneShot(soundToPlay);
+        }
+    }
+
+    public void StopSounds()
+    {
+        soundSource.Stop();
     }
 
     public void LoadScene(string sceneName)

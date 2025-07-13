@@ -59,8 +59,10 @@ MonoBehaviour:
   OnRoundRestart:
     m_PersistentCalls:
       m_Calls: []
-  powerUpPositions: {fileID: 11400000, guid: 2ad5c0aea79322e4f8978de2288d2552, type: 2}
   levelBordersInfo: {fileID: 11400000, guid: 87a4da1b5aea0d14395b7ede3daacb7d, type: 2}
+  powerUpPositions: {fileID: 11400000, guid: 2ad5c0aea79322e4f8978de2288d2552, type: 2}
+  combatTrackID: combatTrack
+  playerDiedID: playerDied
 --- !u!1 &2394757518027662008
 GameObject:
   m_ObjectHideFlags: 0

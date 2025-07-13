@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 9
   prefab: {fileID: 8258045065729922699, guid: af254380ca422f944800d1f0da646e4b, type: 3}
+  pickUpSoundID: pencilPickUp

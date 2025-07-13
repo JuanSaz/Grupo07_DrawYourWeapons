@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class PencilBehaviour : MyBehavior
 {
+    [SerializeField] string pickUpSoundID;
     public override Entity CreateEntity()
     {
         var drawingEntity = new PencilEntity();
+        drawingEntity.pickUpSoundID = pickUpSoundID;
         return drawingEntity;
     }
 }

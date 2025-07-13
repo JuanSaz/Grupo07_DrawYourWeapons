@@ -62,6 +62,9 @@ public class UIManager : MonoBehaviour
 
     private E_UIScreens currentUI = E_UIScreens.MainMenuUI;
 
+    [Header("Audio")]
+    [SerializeField] private string winSoundID;
+
     public UnityEvent<PlayerEntity> onScoreChanged;
     public UnityEvent<PlayerEntity> onPlayerWon;
 
@@ -112,6 +115,7 @@ public class UIManager : MonoBehaviour
             case E_ButtonActions.BackToMenu:
                 if (GameManager.Instance.currentScene != "MenuScene")
                 {
+                    GameManager.Instance.StopSounds();
                     SceneChanger.Instance.LoadScene("MenuScene");
                 }
                 ChangeUIScreen(E_UIScreens.MainMenuUI);
@@ -267,6 +271,7 @@ public class UIManager : MonoBehaviour
             case E_UIScreens.WinUI:
                 currentBackground.sprite = backgroundImages[2];
                 currentBackground.enabled = true;
+                GameManager.Instance.PlaySound(winSoundID);
                 for (int i = 0; i < buttons.Length; i++)
                 {
                     var index = i;
