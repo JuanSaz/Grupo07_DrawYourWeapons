@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject WinCanvas;
 
     private Vector2 screenBounds = new Vector2(8, 5);
-    private List<PencilEntity> activePowerUps = new List<PencilEntity>(3);
+    private List<PowerUpEntity> activePowerUps = new List<PowerUpEntity>(3);
 
     public Action<PlayerEntity> onPlayerKilled;
     private List<PlayerEntity> activePlayers = new List<PlayerEntity>();
@@ -73,10 +73,13 @@ public class LevelManager : MonoBehaviour
             Vector2 spawnPosition2D = powerUpPositions.positions[randomIndex];
             Vector3 spawnPosition = new Vector3(spawnPosition2D.x, spawnPosition2D.y, 0f);
 
-            PencilEntity powerUp = (PencilEntity)InstantiatorManager.Instance.Create(MyBehaviorType.PencilPowerUp);
+            PowerUpEntity powerUp = (PowerUpEntity)InstantiatorManager.Instance.Create
+                ((randomIndex % 2 == 0) ?  
+                MyBehaviorType.PencilPowerUp : MyBehaviorType.PencilPowerUp);
             powerUp.EntityGameObject.transform.position = spawnPosition;
-            powerUp.WakeUp();
 
+
+            powerUp.WakeUp();
             activePowerUps.Add(powerUp);
         }
     }

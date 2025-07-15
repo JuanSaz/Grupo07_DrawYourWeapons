@@ -40,7 +40,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public MyBoxCollider MyBoxCollidier => null;
 
     private bool hasPencilPowerup = false;
-    private PencilEntity currentPencil = null;
+    private PowerUpEntity currentPowerUp = null;
 
     //Audio
     public string shootSoundID;
@@ -98,6 +98,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
             segment.EntityGameObject.transform.position = EntityGameObject.transform.position + (-EntityGameObject.transform.up * drawingOffset);
         }
 
+        Debug.Log(hasPencilPowerup);
     }
     private void Movement()
     {
@@ -118,13 +119,14 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         shotTimer = timeBetweenShots;
     }
 
-    public void ActivatePencilPowerup()
+    public void ActivatePowerUp(PowerUpEntity powerUp)
     {
         if (hasPencilPowerup) return;
 
-        currentPencil = new PencilEntity();
-        currentPencil.WakeUp();
-        currentPencil.StartPowerup(this);
+
+        currentPowerUp = powerUp;
+        currentPowerUp.WakeUp();
+        currentPowerUp.StartPowerup();
     }
 
     public void SetPencilPowerup(bool active)
@@ -132,9 +134,9 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         hasPencilPowerup = active;
     }
 
-    public void OnPencilFinished()
+    public void OnPowerUpFinished()
     {
-        currentPencil = null;
+        currentPowerUp = null;
     }
     public void AddPoint()
     {
@@ -189,9 +191,9 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
             EntityGameObject.transform.SetPositionAndRotation(startPos, startRot);
         }
 
-        if (currentPencil != null)
+        if (currentPowerUp != null)
         {
-            currentPencil.StopPowerup();
+            currentPowerUp.StopPowerup();
         }
 
     }
@@ -226,13 +228,12 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
 
         for (int i = GameManager.Instance.ActivePowerUpColls.Count - 1; i >= 0; i--)
         {
-            if (GameManager.Instance.ActivePowerUpColls[i] is PencilEntity powerUp)
+            PowerUpEntity powerUp = (GameManager.Instance.ActivePowerUpColls[i] as PowerUpEntity);
+            if (powerUp.MyCircleCollider == null) { Debug.Log(powerUp.EntityGameObject.name); continue; }
+            if (MyCircleCollider.IsCircleCollidingCircle(powerUp.MyCircleCollider))
             {
-                if (MyCircleCollider.IsCircleCollidingCircle(powerUp.MyCircleCollider))
-                {
-                    powerUp.OnPickedUp(this);
-                    GameManager.Instance.ActivePowerUpColls.RemoveAt(i);
-                }
+                powerUp.OnPickedUp(this);
+                GameManager.Instance.ActivePowerUpColls.RemoveAt(i);
             }
         }
     }

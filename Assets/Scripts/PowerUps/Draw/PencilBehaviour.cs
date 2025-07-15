@@ -1,14 +1,13 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PencilPowerUp", menuName = "Scriptable Objects/MyBehavior/PencilPowerUp")]
+[CreateAssetMenu(fileName = "PowerUpPencil", menuName = "Scriptable Objects/MyBehavior/PowerUpPencil")]
 
-public class PencilBehaviour : MyBehavior
+public class PencilBehaviour : PowerUpBehaviour
 {
-    [SerializeField] string pickUpSoundID;
     public override Entity CreateEntity()
     {
-        var drawingEntity = new PencilEntity();
-        drawingEntity.pickUpSoundID = pickUpSoundID;
-        return drawingEntity;
+        var powerUpEntity = new PencilEntity();
+        powerUpEntity.pickUpSoundID = pickUpSoundID;
+        return powerUpEntity;
     }
 }
