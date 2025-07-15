@@ -154,6 +154,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8e14a6ddeee50174a934911c602cfb48, type: 2}
   - {fileID: 11400000, guid: 8e14a6ddeee50174a934911c602cfb48, type: 2}
   winSoundID: winSound
+  menuTrackID: menuTrack
   onScoreChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -955,10 +956,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1317517926767994580}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3183004847982218150
 CanvasRenderer:

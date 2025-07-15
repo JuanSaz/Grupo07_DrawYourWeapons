@@ -186,6 +186,8 @@ MonoBehaviour:
   musicList:
   - audioClip: {fileID: 8300000, guid: bf273b437d2a4314d87fd4bf336cae3b, type: 3}
     audioID: combatTrack
+  - audioClip: {fileID: 8300000, guid: 49b861dac3c43164c866cbcd19a66fd4, type: 3}
+    audioID: menuTrack
   sound: {fileID: 5436957303354230356}
   soundList:
   - audioClip: {fileID: 8300000, guid: 8f03c1ac60cb2b34e8ccef05c321110f, type: 3}
@@ -196,6 +198,8 @@ MonoBehaviour:
     audioID: playerDied
   - audioClip: {fileID: 8300000, guid: ee2e67af8bf4d2043bb911d1da24ae67, type: 3}
     audioID: pencilPickUp
+  - audioClip: {fileID: 8300000, guid: 32902239ce0633042b61f69470960c4b, type: 3}
+    audioID: speedPickUp
 --- !u!1 &5436957303354230356
 GameObject:
   m_ObjectHideFlags: 0

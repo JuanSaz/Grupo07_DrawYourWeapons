@@ -10,7 +10,7 @@ public class Audio
     public string audioID;
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IUpdatable
 {
     public string currentScene;
     public static GameManager Instance { get; private set; }
@@ -55,8 +55,17 @@ public class GameManager : MonoBehaviour
 
         musicSource = music.GetComponent<AudioSource>();
         soundSource = sound.GetComponent<AudioSource>();
+
+        UpdateManager.Instance.Subscribe(this);
     }
 
+    public void UpdateMe(float deltaTime)
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            QuitGame();
+        }
+    }
     public void SetPlayerAmount(int amount)
     {
         playerAmount = amount;
@@ -233,6 +242,8 @@ public class GameManager : MonoBehaviour
 
     public void QuitGame()
     {
+        UpdateManager.Instance.Unsubscribe(this);
+
         Application.Quit();
 
 #if UNITY_EDITOR

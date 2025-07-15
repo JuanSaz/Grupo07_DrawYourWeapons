@@ -54,7 +54,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 61bb0d352147a254aa1f70c8bc42343f, type: 2}
   - {fileID: 11400000, guid: 809ec9d86c7ea284a964eaf5fc965cda, type: 2}
   - {fileID: 11400000, guid: cced0272e08df9e4c852b50c3f18b8f8, type: 2}
-  - {fileID: 11400000, guid: 24c45936448571a4cb68a5c49c6ea208, type: 2}
+  - {fileID: 11400000, guid: fb14f2ded0864cb46962629be15355cf, type: 2}
   objectsToPreload:
   - m_AssetGUID: f0f24ae1bc0d537419ddfae27b0e54b4
     m_SubObjectName: 
@@ -71,3 +71,13 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 1
+  - m_AssetGUID: 9feeaf9ff6291564aa0bce0b92490f2a
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  - m_AssetGUID: 10345f45861ff9d4cb81bd2e33518ba2
+    m_SubObjectName: 
+    m_SubObjectGUID: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

@@ -64,6 +64,8 @@ public class UIManager : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] private string winSoundID;
+    [SerializeField] private string menuTrackID;
+    private bool isMenuMusicPlaying;
 
     public UnityEvent<PlayerEntity> onScoreChanged;
     public UnityEvent<PlayerEntity> onPlayerWon;
@@ -166,7 +168,9 @@ public class UIManager : MonoBehaviour
     }
 
     private void SelectPlayer(int playerAmount)
-    {   
+    {
+        GameManager.Instance.StopMusic();
+        isMenuMusicPlaying = false;
         GameManager.Instance.SetPlayerAmount(playerAmount);
         GameManager.Instance.LoadScene("Testing");
     }
@@ -215,6 +219,11 @@ public class UIManager : MonoBehaviour
             case E_UIScreens.MainMenuUI:
                 currentBackground.enabled = true;
                 currentBackground.sprite = backgroundImages[0];
+                if (!isMenuMusicPlaying)
+                {
+                    GameManager.Instance.PlayMusic(menuTrackID);
+                    isMenuMusicPlaying = true;
+                }
                 for (int i = 0; i < buttons.Length; i++)
                 {
                     var index = i;
