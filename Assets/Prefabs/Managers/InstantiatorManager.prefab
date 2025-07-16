@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 809ec9d86c7ea284a964eaf5fc965cda, type: 2}
   - {fileID: 11400000, guid: cced0272e08df9e4c852b50c3f18b8f8, type: 2}
   - {fileID: 11400000, guid: fb14f2ded0864cb46962629be15355cf, type: 2}
+  - {fileID: 11400000, guid: dff6f9a5fe429a345ad9ec0b1c245468, type: 2}
   objectsToPreload:
   - m_AssetGUID: f0f24ae1bc0d537419ddfae27b0e54b4
     m_SubObjectName: 

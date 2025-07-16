@@ -32,7 +32,10 @@ public class PowerUpEntity : Entity, ICollidable, IUpdatable
 
     public override void WakeUp()
     {
-        base.WakeUp();
+        if(EntityGameObject == null) return;
+        myCircleCollider = new MyCircleCollider(EntityGameObject.transform.localScale.x, EntityGameObject);
+        GameManager.Instance.StartCoroutine(SetCollidableOn());
+
     }
     public virtual void SetOwner(PlayerEntity owner)
     {

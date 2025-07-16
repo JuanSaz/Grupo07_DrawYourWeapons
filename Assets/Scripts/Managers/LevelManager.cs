@@ -74,11 +74,9 @@ public class LevelManager : MonoBehaviour
             Vector3 spawnPosition = new Vector3(spawnPosition2D.x, spawnPosition2D.y, 0f);
 
             PowerUpEntity powerUp = (PowerUpEntity)InstantiatorManager.Instance.Create
-                ((randomIndex % 2 == 0) ?  
-                MyBehaviorType.PencilPowerUp : MyBehaviorType.PencilPowerUp);
+                (((randomIndex + i) % 2 == 0) ?  
+                MyBehaviorType.PencilPowerUp : MyBehaviorType.SpeedPowerUp);
             powerUp.EntityGameObject.transform.position = spawnPosition;
-
-
             powerUp.WakeUp();
             activePowerUps.Add(powerUp);
         }

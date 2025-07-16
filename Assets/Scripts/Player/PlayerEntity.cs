@@ -40,6 +40,8 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public MyBoxCollider MyBoxCollidier => null;
 
     private bool hasPencilPowerup = false;
+    private bool hasSpeedBoostPowerUp = false;
+
     private PowerUpEntity currentPowerUp = null;
 
     //Audio
@@ -97,8 +99,6 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
             segment.SetOwner(this);
             segment.EntityGameObject.transform.position = EntityGameObject.transform.position + (-EntityGameObject.transform.up * drawingOffset);
         }
-
-        Debug.Log(hasPencilPowerup);
     }
     private void Movement()
     {
@@ -121,7 +121,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
 
     public void ActivatePowerUp(PowerUpEntity powerUp)
     {
-        if (hasPencilPowerup) return;
+        if (hasPencilPowerup || hasSpeedBoostPowerUp) return;
 
 
         currentPowerUp = powerUp;
@@ -132,6 +132,19 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     public void SetPencilPowerup(bool active)
     {
         hasPencilPowerup = active;
+    }
+
+    public void SetSpeedBoostPowerUp(bool active)
+    {
+        hasSpeedBoostPowerUp = active;
+        if (active)
+        {
+            movementSpeed *= 2f; // Doble velocidad
+        }
+        else
+        {
+            movementSpeed /= 2f; // Velocidad normal
+        }
     }
 
     public void OnPowerUpFinished()
@@ -229,7 +242,7 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         for (int i = GameManager.Instance.ActivePowerUpColls.Count - 1; i >= 0; i--)
         {
             PowerUpEntity powerUp = (GameManager.Instance.ActivePowerUpColls[i] as PowerUpEntity);
-            if (powerUp.MyCircleCollider == null) { Debug.Log(powerUp.EntityGameObject.name); continue; }
+            if (powerUp == null) continue;
             if (MyCircleCollider.IsCircleCollidingCircle(powerUp.MyCircleCollider))
             {
                 powerUp.OnPickedUp(this);
