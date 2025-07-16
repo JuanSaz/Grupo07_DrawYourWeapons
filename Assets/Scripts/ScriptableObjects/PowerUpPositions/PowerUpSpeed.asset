@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a049b102bfe30454ea29539ad1544696, type: 3}
   m_Name: PowerUpSpeed
   m_EditorClassIdentifier: 
-  type: 0
-  prefab: {fileID: 0}
-  pickUpSoundID: 
+  type: 10
+  prefab: {fileID: 8258045065729922699, guid: 2e344a4a14fe3e947bdc8c698ffe5f2d, type: 3}
+  pickUpSoundID: speedPickUp
