@@ -12,9 +12,7 @@ public class PencilEntity : PowerUpEntity
 
     public override void WakeUp()
     {
-        if (EntityGameObject == null) return;
-
-        myCircleCollider = new MyCircleCollider(EntityGameObject.transform.localScale.x, EntityGameObject);
+        base.WakeUp();
     }
 
     public override void OnPickedUp(PlayerEntity entity)

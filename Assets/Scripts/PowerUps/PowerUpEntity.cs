@@ -18,7 +18,8 @@ public class PowerUpEntity : Entity, ICollidable, IUpdatable
 
     public PowerUpEntity(float lifeTime = 2.5f)
     {
-        GameManager.Instance.StartCoroutine(SetCollidableOn());
+        //GameManager.Instance.StartCoroutine(SetCollidableOn());
+        GameManager.Instance.SetPowerUpCollidable(this, true);
     }
     public virtual void UpdateMe(float deltaTime)
     {
@@ -34,8 +35,6 @@ public class PowerUpEntity : Entity, ICollidable, IUpdatable
     {
         if(EntityGameObject == null) return;
         myCircleCollider = new MyCircleCollider(EntityGameObject.transform.localScale.x, EntityGameObject);
-        GameManager.Instance.StartCoroutine(SetCollidableOn());
-
     }
     public virtual void SetOwner(PlayerEntity owner)
     {
@@ -64,12 +63,12 @@ public class PowerUpEntity : Entity, ICollidable, IUpdatable
 
         UpdateManager.Instance.Subscribe(this);
     }
-    private IEnumerator SetCollidableOn()
+    /*private IEnumerator SetCollidableOn()
     {
         yield return new WaitForSeconds(1f);
         if (EntityGameObject != null)
         {
             GameManager.Instance.SetPowerUpCollidable(this, true);
         }
-    }
+    }*/
 }

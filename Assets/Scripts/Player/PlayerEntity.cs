@@ -251,7 +251,6 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
             if (MyCircleCollider.IsCircleCollidingCircle(powerUp.MyCircleCollider))
             {
                 powerUp.OnPickedUp(this);
-                GameManager.Instance.ActivePowerUpColls.RemoveAt(i);
             }
         }
     }
