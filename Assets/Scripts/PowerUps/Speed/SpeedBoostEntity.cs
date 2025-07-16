@@ -11,10 +11,8 @@ public class SpeedBoostEntity : PowerUpEntity
     public override void OnPickedUp(PlayerEntity entity)
     {
         base.OnPickedUp(entity);
-        if (entity.CurrentPowerUp == null)
-        {
-            playerOwner.ActivatePowerUp(this);
-        }     
+
+        playerOwner.ActivatePowerUp(this);
     }
 
     public override void StopPowerup()
