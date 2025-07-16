@@ -43,15 +43,17 @@ public class PowerUpEntity : Entity, ICollidable, IUpdatable
     }
     public virtual void OnPickedUp(PlayerEntity entity)
     {
-        SetOwner(entity);
-        GameManager.Instance.SetPowerUpCollidable(this, false);
-        EntityGameObject.SetActive(false);
-        GameManager.Instance.PlaySound(pickUpSoundID);
-
-
+        if (entity.CurrentPowerUp == null)
+        {
+            SetOwner(entity);
+            GameManager.Instance.SetPowerUpCollidable(this, false);
+            EntityGameObject.SetActive(false);
+            GameManager.Instance.PlaySound(pickUpSoundID);
+        }
     }
     public virtual void StopPowerup()
     {
+        playerOwner.CurrentPowerUp = null;
         UpdateManager.Instance.Unsubscribe(this);
     }
     public virtual void StartPowerup()

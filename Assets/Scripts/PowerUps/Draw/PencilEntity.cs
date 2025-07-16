@@ -20,8 +20,10 @@ public class PencilEntity : PowerUpEntity
     public override void OnPickedUp(PlayerEntity entity)
     {
         base.OnPickedUp(entity);
-        playerOwner.ActivatePowerUp(this);
-
+        if (entity.CurrentPowerUp == null)
+        {
+            playerOwner.ActivatePowerUp(this);
+        }
     }
 
     public override void StopPowerup()

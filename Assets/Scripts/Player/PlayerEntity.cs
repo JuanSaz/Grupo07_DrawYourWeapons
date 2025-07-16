@@ -43,6 +43,11 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
     private bool hasSpeedBoostPowerUp = false;
 
     private PowerUpEntity currentPowerUp = null;
+    public PowerUpEntity CurrentPowerUp
+    {
+        get { return currentPowerUp; } 
+        set { currentPowerUp = value; }
+    }
 
     //Audio
     public string shootSoundID;
@@ -139,11 +144,11 @@ public class PlayerEntity: Entity, IUpdatable, IFixUpdatable, ICollidable
         hasSpeedBoostPowerUp = active;
         if (active)
         {
-            movementSpeed *= 2f; // Doble velocidad
+            movementSpeed = 5f; // Doble velocidad
         }
         else
         {
-            movementSpeed /= 2f; // Velocidad normal
+            movementSpeed = 3f; // Velocidad normal
         }
     }
 
