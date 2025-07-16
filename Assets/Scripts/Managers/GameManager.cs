@@ -242,7 +242,7 @@ public class GameManager : MonoBehaviour, IUpdatable
 
     public void QuitGame()
     {
-        UpdateManager.Instance.Unsubscribe(this);
+        //UpdateManager.Instance.Unsubscribe(this);
 
         Application.Quit();
 
